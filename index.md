@@ -1,1 +1,1 @@
-My name is Ivan and this is my personal coding blog.
+My name is Ivan and this is my personal web page.
