@@ -1,3 +1,6 @@
+---
+title: Hello test
+---
 <html>
 <body>
 Hello world
