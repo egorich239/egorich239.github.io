@@ -1,5 +1,6 @@
 ---
 title: Hello test
+comment_issue_id: 1
 ---
 <html>
 <body>
