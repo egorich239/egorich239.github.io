@@ -3,7 +3,7 @@ title: C++ compile-time key-value storage
 ---
 
 Consider you are writing a C++ application that has some amount of global information that is accessed by a string key
-*and* you would like to avoid explicit definition of storage per key. For example, your application has uses a set of
+*and* you would like to avoid explicit definition of storage per key. For example, your application uses a set of
 named copy-paste buffers to exchange information in the following fashion:
 
 ```c++
@@ -88,7 +88,7 @@ The above solution does not work for string literal keys. There is no way to hav
 parameter. There is an [amazing Quora answer](https://www.quora.com/How-do-you-pass-a-string-literal-as-a-parameter-to-a-C-template-class) by David Vandevoorde,
 suggesting that some time around 2023 that may become an option. So what do we do in 2020?
 
-One thing we could do is to replace the string literal with a type representing:
+One thing we could do is replace the string literal with a type representing it:
 
 ```c++
 template <char... Chars>
@@ -111,6 +111,11 @@ Now the key question is of course how to conveniently map a literal to its corre
 In this chapter I present a C++17 macro that produces an expression of the necessary type, and then explain it.
 
 ```c++
+#define makeLiteralTypeValue(lit_) \
+  std::apply(                      \
+    [](auto&&... indices) { return CLiteral<(lit_)[indices()]...>(); }, \
+    makeTuple(std::make_index_sequence<constexprStrLen(lit_)>()))
+
 template <size_t... Idx>
 constexpr std::tuple<std::integral_constant<size_t, Idx>...> 
 makeTuple(std::index_sequence<Idx...>) noexcept { return {}; }
@@ -120,11 +125,6 @@ constexpr size_t constexprStrLen(const char* c) {
   while (*c++) ++t;
   return t;
 }
-
-#define makeLiteralTypeValue(lit_) \
-  std::apply(                      \
-    [](auto&&... indices) { return CLiteral<(lit_)[indices()]...>(); }, \
-    makeTuple(std::make_index_sequence<constexprStrLen(lit_)>()))
 ```
     
 The key idea is to define and call a lambda with the expansion pack. Elements of `indices` pack have types
@@ -135,10 +135,10 @@ type from `std::integral_constant<size_t, 0>` to `std::integral_constant<size_t,
 `std::apply` on this tuple unpacks its arguments and passes into the lambda.
 
 All we need to do is to get the type of this expression. Unfortunately this expression contains a lambda and
-as such we cannot call `decltype(makeLiteralTypeValue("foo"))` directly (IANAL: C++ standard is relaxing some
-of these restrictions but my attempt to use `decltype()` failed and I didn't research any further).
+as such we cannot call `decltype(makeLiteralTypeValue("foo"))` directly (IANAL: recent C++ standards are relaxing 
+some of these restrictions but my attempt to use `decltype()` failed and I didn't research any further).
 
-Instead we can assign the expression to a named constant. It can technically be even `constexpr` but in my practice
+Instead we can assign the expression to a named variable. It can technically be even `constexpr` but in my practice
 some (rather old) compilers would disagree with you. That is not a problem however, as we are only interested
 in the *type* and not the value.
 
