@@ -1,5 +1,5 @@
 ---
-title: C++ compile-time key-value storage
+title: C++ compile-time key-value storage with string keys
 ---
 
 Consider you are writing a C++ application that has some amount of global information that is accessed by a string key
