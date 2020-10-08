@@ -6,4 +6,4 @@ comment_issue_id: 1
 Hello world
 </div>
 <script src="/js/jquery.min.js"></script>
-{% include comments.html element=".post-content" github_account="jhvanderschee/jekyllcodex" require_cookie_consent="true" %}
+{% include comments.html element=".post-content" github_account="egorich239/egorich239.github.io" require_cookie_consent="true" %}
