@@ -1,10 +1,9 @@
 ---
-title: Hello test
-comment_issue_id: 1
+title: C++ compile-time key-value storage
 ---
-<div class="post-content">
-Hello world
-</div>
-<script src="/js/jquery.min.js"></script>
-{% include cookie-consent.html %}
-{% include comments.html element=".post-content" github_account="egorich239/egorich239.github.io" require_cookie_consent="true" %}
+
+```
+int main() {
+  return 0;
+}
+```
