@@ -3,8 +3,6 @@ layout: post
 title: Using string literals as template arguments in C++17
 ---
 
-# Using string literals as template arguments in C++17
-
 Consider your C++ application has some global state that is accessed by a string key *and* you would like to avoid 
 explicit definition of storage per key. For example, your application uses a set of named copy-paste buffers to exchange
 information in the following fashion:
