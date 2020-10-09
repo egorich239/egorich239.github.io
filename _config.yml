@@ -3,4 +3,4 @@ markdown: kramdown
 theme: minima
 minima:
   social_links:
-    twitter: jekyllrb
+    twitter: egorich239
