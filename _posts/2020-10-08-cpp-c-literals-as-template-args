@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Using string literals as template arguments in C++17
 ---
 
