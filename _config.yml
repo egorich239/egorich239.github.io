@@ -5,5 +5,7 @@ minima:
   social_links:
     twitter: egorich239
     github: egorich239
+twitter_username: egorich239
+github_username: egorich239
 plugins:
   - jekyll-feed
