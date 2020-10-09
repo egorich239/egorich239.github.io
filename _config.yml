@@ -1,5 +1,6 @@
 name: egori.ch
 markdown: kramdown
+theme: minima
 minima:
   social_links:
     twitter: jekyllrb
