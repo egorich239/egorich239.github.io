@@ -3,6 +3,9 @@ layout: post
 title: Using string literals as template arguments in C++17
 ---
 
+**Update 2021-08-04:** I fixed some bugs in the code that prevented its compilation (see in part 3) and 
+[published](https://github.com/egorich239/typed_literals/) a working demo.
+
 Consider your C++ application has some global state that is accessed by a string key *and* you would like to avoid 
 explicit definition of storage per key. For example, your application uses a set of named copy-paste buffers to exchange
 information in the following fashion:
@@ -106,7 +109,7 @@ I first present a C++17 macro that produces an expression of the necessary type,
 ```c++
 #define makeLiteralTypeValue(lit_) \
   std::apply(                      \
-    [](auto&&... indices) { return CLiteral<(lit_)[indices()]...>(); }, \
+    [](auto... indices) { return CLiteral<(lit_)[decltype(indices)::value]...>(); }, \
     makeTuple(std::make_index_sequence<constexprStrLen(lit_)>()))
 
 template <size_t... Idx>
@@ -128,6 +131,12 @@ The simplest way I found to generate it is to use `makeTuple` utility that conve
 `std::index_sequence<0, 1, ..., strlen(lit_) - 1>` type to a tuple where each element has a unique
 type from `std::integral_constant<size_t, 0>` to `std::integral_constant<size_t, strlen(lit_) - 1>`. Calling
 `std::apply` on this tuple unpacks its arguments and passes into the lambda.
+
+**Update 2021-08-04:** An earlier version of the code passed `indices` by universal reference (`auto&&`) and
+attempted to call `indices()` in the expression `(lit_)[indices()]...`. This does not work, because it pulls the dependency
+on the *values* of `indices...` into the template argument. Instead we should depend on the *types* of `indices`,
+hence `(lit_)[decltype(indices)::value]...`. Also this `decltype()` does not work with `auto&&` because `decltype(indices)`
+resolves into a reference, the simplest solution to that is to drop the universal reference and leave just `auto...`.
 
 All we need to do is to get the type of this expression. Unfortunately this expression contains a lambda and
 as such we cannot call `decltype(makeLiteralTypeValue("foo"))` directly (IANAL: recent C++ standards are relaxing 
