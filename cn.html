@@ -16,7 +16,7 @@
 
          var map = new L.map('map', mapOptions);
 
-         L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+         new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
          L.marker(C).addTo(map)
             .bindPopup('<a href="alehouse.ch">Alehouse</a>')
             .openPopup();
