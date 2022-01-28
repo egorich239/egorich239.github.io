@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <title>OSM and Leaflet</title>
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
-      <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>   
-   </head>
-   <body>
-      <div style="width: 400px; margin: 0 auto;"><img src="both-2.png" style="width: 400px; height: 80px;" /></div>
-      <div style="width: 400px"><pre><b>Dear friends!</b>
-      
-      We are getting married. If you would like to see us on this occasion,
-      we will be waiting for you on February, 4th, in Alehouse starting 7pm.
-      
-      Yours,
-      C & N
-      </pre></div>
-      <div id="map" style="width:200px; height:200px"></div>
-      <script>
-         const C = [47.3790827, 8.5478805];
-         var mapOptions = {
-            center: C,
-            zoom: 14
-         }
+<head>
+<title>C &amp; N getting married</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>   
+</head>
+<body><div style="width: 600px; margin: 0 auto">
+   <div><img src="both-2.png" style="width: 600px; height: 120px;" /></div>
+   <div><pre><b>Dear friends!</b>
 
-         var map = new L.map('map', mapOptions);
+   We are getting married. If you would like to see us on this occasion,
+   we will be waiting for you on February, 4th, in Alehouse starting 7pm.
 
-         new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-         L.marker(C).addTo(map)
-            .bindPopup('<a href="alehouse.ch">Alehouse</a>')
-            .openPopup();
-      </script>
-   </body>
+Yours,
+C &amp; N
+</pre></div>
+   <div id="map" style="width: 200px; height: 200px; margin-left: auto; margin-right: 0"></div>
+   <script>
+      const C = [47.3790827, 8.5478805];
+      var mapOptions = {
+         center: C,
+         zoom: 14
+      }
 
+      var map = new L.map('map', mapOptions);
+
+      new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+      L.marker(C).addTo(map)
+         .bindPopup('<a href="alehouse.ch">Alehouse</a>')
+         .openPopup();
+   </script>
+</div></body>
 </html>
