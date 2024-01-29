@@ -1,0 +1,11 @@
+---
+layout: page
+---
+
+{{ content }}
+
+{%- for key in page.logbook_entries reversed -%}
+{%- assign entry = site.data.logbook[key] -%}
+<h1>{{ entry.summary.Dates }}</h1>
+{{ entry.summary.Remarks | markdownify }}
+{%- endfor -%}

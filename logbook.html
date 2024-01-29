@@ -1,0 +1,21 @@
+---
+layout: page
+title: logbook
+---
+
+<p>This logbook is work in progress, more entries are coming.</p>
+
+<ul class="post-list">
+  {%- for entry in site.logbook reversed -%}
+  {%- assign logbook_entry = site.data.logbook[entry.logbook_entry] -%}
+  <li>
+    <span class="post-meta">{{ logbook_entry.summary.Dates }}</span>
+    <h3>
+      <a class="post-link" href="{{ entry.url | relative_url }}">
+        {{ entry.title | escape }}
+      </a>
+    </h3>
+    <small>{{ logbook_entry.summary.Track }}</small>
+  </li>
+  {%- endfor -%}
+</ul>

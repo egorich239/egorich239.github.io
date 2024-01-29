@@ -1,0 +1,40 @@
+---
+layout: page
+permalink: /logbook/
+---
+
+{%- assign logbook_entry = site.data.logbook[page.logbook_entry] -%}
+<h2>{{ logbook_entry.summary.Dates }}</h2>
+<b>Track: </b>{{ logbook_entry.summary.Track }}<br />
+<b>Mileage: </b>{{ logbook_entry.summary.Mileage }}<br />
+<b>Role: </b>{% if logbook_entry.summary.Crew.Skipper == "Ivan Egorov" %}skipper{% else %}crew{% endif %}<br />
+<b>Tidal: </b>{{ logbook_entry.summary.Tidal }}
+
+{% if logbook_entry.summary.Resources %}
+<h3>Resources</h3>
+{% for r in logbook_entry.summary.Resources %}
+<b>{{ r[0] }}:</b> {{ r[1] | markdownify }}
+{% endfor %}
+{% endif %}
+
+{{ content | strip | markdownify }}
+
+<h3>Log</h3>
+{{ logbook_entry.summary.Remarks | markdownify }}
+
+<table>
+    <tr>
+        <th scope="col">Time</th>
+        <th scope="col">Location</th>
+        <th scope="col">Logged distance</th>
+        <th scope="col">Remarks</th>
+    </tr>
+    {%- for e in logbook_entry.logbook -%}
+    <tr>
+        <th scope="row">{{e[0]}}</td>
+        <td>{{e[1].Location}}</td>
+        <td>{{e[1].Sailed}}</td>
+        <td>{{e[1].Remarks | markdownify}}</td>
+    </tr>
+    {%- endfor -%}
+</table>
