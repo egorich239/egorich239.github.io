@@ -10,6 +10,6 @@ collections:
   logbook:
     output: true
     permalink: /:collection/:year/:slug:output_ext
-  location:
+  waters:
     output: true
     permalink: /:collection/:slug:output_ext

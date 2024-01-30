@@ -1,0 +1,32 @@
+---
+layout: page
+---
+
+{{ content }}
+
+<ul class="post-list">
+  {%- for entry in site.waters -%}
+  {%- assign waters = site.data.waters[entry.slug] -%}
+  <li>
+    <h3>
+      <a class="post-link" href="{{ entry.url | relative_url }}">
+        {{ entry.title | escape }}
+      </a>
+    </h3>
+    <small>logbook:
+      {%- assign ini = true -%}
+      {%- for e in site.logbook -%}
+      {%- assign logbook_waters = e.waters | strip | split: " " -%}
+      {%- assign logbook_entry = site.data.logbook[e.logbook_entry] -%}
+      {%- for w in logbook_waters %}
+      {%- if w == entry.slug -%}
+      {% if ini == false %};{% endif %}
+      {%- assign ini = false %}      
+      <a href="{{ e.url | relative_url }}">{{ e.title | escape }}</a> ({{ logbook_entry.summary.Dates }})
+      {%- endif -%}
+      {%- endfor -%}
+      {%- endfor -%}
+    </small>
+  </li>
+  {%- endfor -%}
+</ul>

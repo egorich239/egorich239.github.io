@@ -1,0 +1,4 @@
+---
+layout: waters
+title: Lofoten
+---

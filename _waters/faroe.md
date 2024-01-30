@@ -1,8 +1,6 @@
 ---
-layout: location
+layout: waters
 title: Faroe Islands
-logbook_entries:
-- 2023-faroe
 ---
 
 Faroe Islands are located in North Atlantic,

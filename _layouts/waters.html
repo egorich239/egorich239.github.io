@@ -1,0 +1,32 @@
+---
+layout: page
+---
+
+{%- assign waters = site.data.waters[page.slug] -%}
+<p>logbook:
+{%- assign ini = true -%}
+{%- for e in site.logbook -%}
+{%- assign logbook_waters = e.waters | strip | split: " " -%}
+{%- assign logbook_entry = site.data.logbook[e.logbook_entry] -%}
+{%- for w in logbook_waters %}
+{%- if w == page.slug -%}
+{% if ini == false %};{% endif %}
+{%- assign ini = false %}
+<a href="{{ e.url | relative_url }}">{{ e.title | escape }}</a> ({{ logbook_entry.summary.Dates }})
+{%- endif -%}
+{%- endfor -%}
+{%- endfor -%}
+</p>
+
+{{ content }}
+
+<h2>Resources</h2>
+{%- for r in waters.Resources -%}
+<b>{{ r[0] }}:</b> {{ r[1] | markdownify }}
+{%- endfor -%}
+
+{%- for key in page.logbook_entries reversed -%}
+{%- assign entry = site.data.logbook[key] -%}
+<h2>{{ entry.summary.Dates }}</h2>
+{{ entry.summary.Remarks | markdownify }}
+{%- endfor -%}

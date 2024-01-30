@@ -14,16 +14,10 @@ Boat:
 - Draft: 2.2m
 Tidal: yes; up to 1.8m.
 
-Resources:
-  Meteo: |
-    [yr.no](https://yr.no), Windy, Windfinder
-  Vestfallskyrrindi (see below): |
-    - Rák app on you smartphone (<www.rak.fo>)
-    - <https://fishin.fo/>
-    - <https://portal.fo/vestfallskyrrindi>
-
 Remarks: |
-  Imray Arctic and Northern Waters is useful as an overview, but lacks/underestimates depths around many ports, Navionics is adequate.
+  Imray Arctic and Northern Waters is useful as an overview, but lacks/underestimates depths around many ports,
+  [Cruising Guide to Iceland, the Faroe Islands, Greenland and Jan Mayen 2023](https://www.theca.org.uk/catalog/publications/iceland)
+  proved to be very useful, Navionics is adequate.
   There are a couple other sailing directions, that were given to me by the boat owner, these proved to be most useful.
 
   Tidal streams are very strong, they create races and choppy sea, in different places at different phase of the tide:
