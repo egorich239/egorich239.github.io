@@ -37,7 +37,7 @@ layout: page
         <th scope="row">{{e[0]}}</td>
         <td>{{e[1].Location}}</td>
         <td>{{e[1].Sailed}}</td>
-        <td>{{e[1].Remarks | markdownify}}</td>
+        <td>{{e[1].Remarks | strip | markdownify}}</td>
     </tr>
     {%- endfor -%}
 </table>
