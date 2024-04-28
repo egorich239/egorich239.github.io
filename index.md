@@ -1,6 +1,7 @@
 ---
 layout: home
 title: main()
+list_title: " "
 ---
 
 My name is Ivan Egorov.
