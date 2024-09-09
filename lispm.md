@@ -7,7 +7,10 @@ gitlog: lispm
 git: [repo](https://github.com/egorich239/lispm)
 
 This study is devoted to a C implementation of a small VM for a dialect of Lisp.
-I aimed to fit it in 4K of code for the core language on x86-64 platform.
+It is accompanied by a series of blog posts, that I kept directly in the commit
+messages of the `main` branch.
+
+I aimed to fit the implementation in 4K of code for the core language on x86-64 platform.
 The core language in `lispm.c` supports `lambda`, `let`, `letrec` constructs,
 has syntax for unsigned numbers 2 bits shorter than the native, implements
 tail call optimization, a compacting garbage collector, tracks the overflow
@@ -26,4 +29,4 @@ ridiculous mistakes are now ingrained into the commit history. I was so embarras
 to discover word "anigmatic" in one of the messages, that opted for some minimal
 post-processing :-)
 
-Below is the full list of posts that I created this way.
+Below is the full list of commit posts.
