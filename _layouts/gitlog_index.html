@@ -1,0 +1,15 @@
+---
+layout: page
+---
+
+{{ content }}
+
+<ul>
+  {%- for entry in site[page.gitlog] -%}
+  <li>
+    <a href="{{ entry.url | relative_url }}">
+      {{ entry.title | escape }}
+    </a>{%- if entry.subtitle -%}<br /><small>{{ entry.subtitle | escape }}</small>{%- endif -%}
+  </li>
+  {%- endfor -%}
+</ul>

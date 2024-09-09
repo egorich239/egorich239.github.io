@@ -1,7 +1,11 @@
 ---
-layout: post
+layout: page
 title: Using string literals as template arguments in C++17
+redirect_from:
+  - /2020/10/08/cpp-c-literals-as-template-args.html
+  - /posts/p0001.html
 ---
+
 
 **Update 2021-08-04:** I fixed some bugs in the code that prevented its compilation (see in part 3) and 
 [published](https://github.com/egorich239/typed_literals/) a working demo.

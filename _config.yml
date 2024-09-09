@@ -4,10 +4,21 @@ markdown: kramdown
 theme: minima
 github_username: egorich239
 linkedin_username: egorich
+plugins:
+  - jekyll-redirect-from
+whitelist:
+  - jekyll-redirect-from
 collections:
+  lispm:
+    output: true
+    permalink: /:collection/:slug:output_ext
   logbook:
     output: true
     permalink: /:collection/:year/:slug:output_ext
   waters:
     output: true
     permalink: /:collection/:slug:output_ext
+header_pages:
+  - index.md
+  - logbook.md
+  - waters.md
