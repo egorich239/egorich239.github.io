@@ -192,7 +192,7 @@ The shallow garbage collection avoids recursion over linked list by
 first creating the reversed compact copy, and then reversing it in-place.
 
 
-[^0]: https://github.com/jart/sectorlisp
+[^0]: <https://github.com/jart/sectorlis>
 [^1]: Reminder: stack grows down.
 ### verbose branch logs
 

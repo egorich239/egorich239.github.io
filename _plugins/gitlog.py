@@ -18,12 +18,17 @@ class Config:
     root: str
 
 
-def linkify(title: str):
+def name_from_title(title: str):
     title = re.sub(r"[^\w\s']+", "-", title)
     title = re.sub(r"[\"'\s_]+", "-", title)
     title = re.sub(r"--+", "-", title)
     title = re.sub(r"^-|-$", "", title)
     return title.lower()
+
+
+def linkify(s: str) -> str:
+    # extremely crude
+    return re.sub(r"(http(s?)://[^\s]+)[^.,;!]", "<\\1>", s)
 
 
 def git_revs(repo: Path, cfg: Config, until: str, *parms) -> List[str]:
@@ -99,7 +104,7 @@ def main(p: Path):
                 published.add(a)
                 revlog.append((a, git_rev_message(tmp / "repo", a)))
 
-            with open(di / f"{d}-{linkify(title)}.md", "w") as fout:
+            with open(di / f"{d}-{name_from_title(title)}.md", "w") as fout:
                 fout.write(
                     f"""---
 layout: gitlog
@@ -113,7 +118,7 @@ commit: {cfg.repo.replace('.git', '/commit/') + p}
                 in_footnote = False
                 in_code = False
                 for l in lines:
-                    l = re.sub(r"\[(\d+)\]", "[^\\1]", l.rstrip())
+                    l = re.sub(r"\[(\d+)\]", "[^\\1]", linkify(l.rstrip()))
                     l = re.sub("anigmatic", "enigmatic", l)
                     if l.startswith("["):
                         in_footnote = True

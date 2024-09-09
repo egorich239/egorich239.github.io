@@ -16,7 +16,7 @@ The `funs.c` expands the language with builtin functions for lists and integers.
 As of writing `debug.c` needs some tl&c, same goes for tracing capabilities.
 I also want to eventually properly unit test the functions in `lispm.c` and `lispm.h`.
 
-The code is located at https://github.com/egorich239/lispm.
+The code is located at <https://github.com/egorich239/lispm>.
 
 Since I tend to hack-hack-hack much more than write blog posts,
 I experimented with blogging right-there-and-then, i.e. directly in the
