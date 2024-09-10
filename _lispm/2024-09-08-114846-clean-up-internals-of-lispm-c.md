@@ -14,16 +14,13 @@ explanation in the branch commits.
 
 ### verbose branch logs
 
-* [[20761412](https://github.com/egorich239/lispm/commit/20761412e4d2d6b675be6faaded52cde965bbd94)] make lispm_init() non-throwing
+* [[6061537b](https://github.com/egorich239/lispm/commit/6061537bd3536c94c7eda6397b2399def8a8c3a7)] avoid unnecessary round trip through quote
 
-   Since this function is not expected to be guarded by `lispm_rt_try()`,
-   it should not throw. This means that `htable_ensure()` must return an
-   error status.
-   
-   I took this opportunity also to simplify the interaction between lexer
-   and `htable_ensure()`. Now lexer always puts the currently read literal
-   at `M.tp` position and makes it NUL-terminated, whereas `htable_hash`
-   and `htable_ensure` rely on this convention.
+   Previously I turned the parsed empty list and numeric value into an
+   instruction to quote them. The `eval()` would then reduce the
+   `(CONS QUOTE val)` to `(CONS () val)`, and then return `val`. Notably,
+   this extra step of reducing `QUOTE` is not needed, and we can generate
+   the `(CONS () val)` instruction at the semantic analysis phase.
    
 * [[a679f6d2](https://github.com/egorich239/lispm/commit/a679f6d28b377e3cca03a7dda8e4b6954eb4622e)] introduce internal-obj.h
 
@@ -57,11 +54,14 @@ explanation in the branch commits.
    A minor change is that I got rid of `lispm_is_valid_result()` check. I
    let the user decide which results they consider valid.
    
-* [[6061537b](https://github.com/egorich239/lispm/commit/6061537bd3536c94c7eda6397b2399def8a8c3a7)] avoid unnecessary round trip through quote
+* [[20761412](https://github.com/egorich239/lispm/commit/20761412e4d2d6b675be6faaded52cde965bbd94)] make lispm_init() non-throwing
 
-   Previously I turned the parsed empty list and numeric value into an
-   instruction to quote them. The `eval()` would then reduce the
-   `(CONS QUOTE val)` to `(CONS () val)`, and then return `val`. Notably,
-   this extra step of reducing `QUOTE` is not needed, and we can generate
-   the `(CONS () val)` instruction at the semantic analysis phase.
+   Since this function is not expected to be guarded by `lispm_rt_try()`,
+   it should not throw. This means that `htable_ensure()` must return an
+   error status.
+   
+   I took this opportunity also to simplify the interaction between lexer
+   and `htable_ensure()`. Now lexer always puts the currently read literal
+   at `M.tp` position and makes it NUL-terminated, whereas `htable_hash`
+   and `htable_ensure` rely on this convention.
    

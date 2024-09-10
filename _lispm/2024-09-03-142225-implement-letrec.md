@@ -114,23 +114,6 @@ guard.
 [^0]: I also used this mechanics to evaluate let-expressions.
 ### verbose branch logs
 
-* [[b93f872a](https://github.com/egorich239/lispm/commit/b93f872ab8c7bcbefe24bb8908d459ad271a9477)] implement letrec
-
-   I didn't have a plan for it yesterday morning, but couldn't resist the
-   temptation when I figured that it should be possible yesterday in the
-   evening :-)
-   
-* [[a6d1f225](https://github.com/egorich239/lispm/commit/a6d1f225d746c4e8a3ec617878bb4bb6d801947d)] extract semantic analysis in its own phase
-
-   Essentially paying the price of the past mistakes. Mixing parsing and
-   semantic analysis was okay-ish previously, but it stays in the way of
-   implementing `letrec`, because the way I envision the latter is by
-   transforming `(letrec ((a abody) (b bbody) body)` into
-   `((lambda (a b) body) (abody bbody))` but in a way that binds `a` and
-   `b` into the definitions of `abody` and `bbody`, and for that I should
-   scan all the names before going into the semantic analysis of the
-   bodies.
-   
 * [[d3e0c8c4](https://github.com/egorich239/lispm/commit/d3e0c8c43283a1b79c355e7d4a1031b75e1162da)] move builins and tokens into `00 11` sub-namespace
 
    I plan to introduce `PARSE_SYM_REC` in `11 11` group of special objects,
@@ -143,4 +126,21 @@ guard.
    In fact, I now use the whole 8 lower bits to distinguish between
    builtins and lexemes, because 24 bits is more than enough for the
    payload in these categories.
+   
+* [[a6d1f225](https://github.com/egorich239/lispm/commit/a6d1f225d746c4e8a3ec617878bb4bb6d801947d)] extract semantic analysis in its own phase
+
+   Essentially paying the price of the past mistakes. Mixing parsing and
+   semantic analysis was okay-ish previously, but it stays in the way of
+   implementing `letrec`, because the way I envision the latter is by
+   transforming `(letrec ((a abody) (b bbody) body)` into
+   `((lambda (a b) body) (abody bbody))` but in a way that binds `a` and
+   `b` into the definitions of `abody` and `bbody`, and for that I should
+   scan all the names before going into the semantic analysis of the
+   bodies.
+   
+* [[b93f872a](https://github.com/egorich239/lispm/commit/b93f872ab8c7bcbefe24bb8908d459ad271a9477)] implement letrec
+
+   I didn't have a plan for it yesterday morning, but couldn't resist the
+   temptation when I figured that it should be possible yesterday in the
+   evening :-)
    

@@ -110,18 +110,18 @@ still can't reasonably test evaluation failures.
 [^0]: At this very moment I realized that I forgot to restore the state of     htable after captures evaluation. I had to stop writing, and go     commit another patch to the branch with the change.
 ### verbose branch logs
 
-* [[3a6eb980](https://github.com/egorich239/lispm/commit/3a6eb9805cd44f9b81fc73bdff3afcd3d6456562)] restore the state of htable after captures are evaluated
-
-   (Quick) evaluation of captures relies heavily on changing the state of
-   htable. We should not forget to restore the state once we are done
-   evaluating.
-   
-* [[51ead271](https://github.com/egorich239/lispm/commit/51ead27177d2595cb0b0c90c5bfd166e3d6f5b9a)] implemented tests for evcap algorithm
-
 * [[351ac002](https://github.com/egorich239/lispm/commit/351ac002a773f6d3a08e4da641343ab66e2be96e)] wip: fixes to evlet applied, tests pending
 
    I have changed evlet for the better, however in order to properly test
    it, I need to extend trace callbacks, and ensure that tests are always
    built with tracing on. So I also reorganized the main Makefile and moved
    tests to a separate directory.
+   
+* [[51ead271](https://github.com/egorich239/lispm/commit/51ead27177d2595cb0b0c90c5bfd166e3d6f5b9a)] implemented tests for evcap algorithm
+
+* [[3a6eb980](https://github.com/egorich239/lispm/commit/3a6eb9805cd44f9b81fc73bdff3afcd3d6456562)] restore the state of htable after captures are evaluated
+
+   (Quick) evaluation of captures relies heavily on changing the state of
+   htable. We should not forget to restore the state once we are done
+   evaluating.
    

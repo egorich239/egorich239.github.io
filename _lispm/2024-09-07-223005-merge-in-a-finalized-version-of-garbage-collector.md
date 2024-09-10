@@ -192,9 +192,13 @@ The shallow garbage collection avoids recursion over linked list by
 first creating the reversed compact copy, and then reversing it in-place.
 
 
-[^0]: <https://github.com/jart/sectorlis>
+[^0]: <https://github.com/jart/sectorlisp>
 [^1]: Reminder: stack grows down.
 ### verbose branch logs
+
+* [[fd4f7231](https://github.com/egorich239/lispm/commit/fd4f72318b506f7b332c00922d4652971dc62fab)] step 9: more straight-forward logic for gc
+
+* [[6898509f](https://github.com/egorich239/lispm/commit/6898509fa50a313e0c0517435a5e5b46b53cae35)] step 10: minor cleanup, some more bytes won
 
 * [[5ba384da](https://github.com/egorich239/lispm/commit/5ba384da0339a1031fdf6ffb0b741b3e0668416a)] step 11: avoid unnecessary gc call
 
@@ -202,6 +206,3 @@ first creating the reversed compact copy, and then reversing it in-place.
    very top of the available stack. Adding one more gc call after the
    mapping is done does not do anything to the stack.
    
-* [[6898509f](https://github.com/egorich239/lispm/commit/6898509fa50a313e0c0517435a5e5b46b53cae35)] step 10: minor cleanup, some more bytes won
-
-* [[fd4f7231](https://github.com/egorich239/lispm/commit/fd4f72318b506f7b332c00922d4652971dc62fab)] step 9: more straight-forward logic for gc

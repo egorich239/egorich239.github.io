@@ -65,6 +65,34 @@ terrible.
 [^0]: I plan to tell more about stack, htable, and garbage collection in a     later post when addressing the TODO open in gc implementation.
 ### verbose branch logs
 
+* [[21ef1f6f](https://github.com/egorich239/lispm/commit/21ef1f6f7ecdc9e3724e155e56619aed499e2662)] move htable key tag bits to lower bits
+
+   I plan to also put lambdas into htable, and move captures analysis and
+   syntactic structure checks to the parsing stage.
+   
+* [[9a22d549](https://github.com/egorich239/lispm/commit/9a22d54951a83ea6054bc1e1a4fc4ba661fab701)] allocate special symbols space for lexer tokens
+
+   It has been a long standing TODO, that had no technical complications.
+   
+* [[d5983dcf](https://github.com/egorich239/lispm/commit/d5983dcf2f3db15b5e72519f8627c38d5880958a)] wip: Iteration over lispm/lrt0 done
+
+   Submitting the current progress, the lispm/lrt0 binaries build alright,
+   the rest does not yet build.
+   
+* [[2e15ddb2](https://github.com/egorich239/lispm/commit/2e15ddb207b6a19df3c1c9828538108a2e842abe)] a full parser passes tests
+
+   It added whopping 500 bytes to the binary, reduce it maybe?
+   
+* [[d204d856](https://github.com/egorich239/lispm/commit/d204d856f39f07fe68a2aaec85d4eeba61e37a75)] long overdue: trace failed assertions
+
+   Currently failed assertions are very uniniformative, essentially saying
+   that a signal killed the process. This change finally brings a bit more
+   information about the failure.
+   
+* [[d73199d1](https://github.com/egorich239/lispm/commit/d73199d124be21cd7aaff67d3dbd44cac3b50b7b)] win back some 50 bytes
+
+   Leaving the frame was more complicated than it should've been.
+   
 * [[df953238](https://github.com/egorich239/lispm/commit/df953238cd2abb1fb3a47ee56c64eb4afd23ce15)] another optimization pass: 80 bytes less
 
    Large chunk of the savings is thanks to changing `lispm_st_obj_alloc()`
@@ -79,32 +107,4 @@ terrible.
    
    My favorite is the finding in `cons_reverse_inplace()`, where I realized
    that `M.stack + ...` evaluation is unnecessary and yields `cons[1]`.
-   
-* [[d73199d1](https://github.com/egorich239/lispm/commit/d73199d124be21cd7aaff67d3dbd44cac3b50b7b)] win back some 50 bytes
-
-   Leaving the frame was more complicated than it should've been.
-   
-* [[d204d856](https://github.com/egorich239/lispm/commit/d204d856f39f07fe68a2aaec85d4eeba61e37a75)] long overdue: trace failed assertions
-
-   Currently failed assertions are very uniniformative, essentially saying
-   that a signal killed the process. This change finally brings a bit more
-   information about the failure.
-   
-* [[2e15ddb2](https://github.com/egorich239/lispm/commit/2e15ddb207b6a19df3c1c9828538108a2e842abe)] a full parser passes tests
-
-   It added whopping 500 bytes to the binary, reduce it maybe?
-   
-* [[d5983dcf](https://github.com/egorich239/lispm/commit/d5983dcf2f3db15b5e72519f8627c38d5880958a)] wip: Iteration over lispm/lrt0 done
-
-   Submitting the current progress, the lispm/lrt0 binaries build alright,
-   the rest does not yet build.
-   
-* [[9a22d549](https://github.com/egorich239/lispm/commit/9a22d54951a83ea6054bc1e1a4fc4ba661fab701)] allocate special symbols space for lexer tokens
-
-   It has been a long standing TODO, that had no technical complications.
-   
-* [[21ef1f6f](https://github.com/egorich239/lispm/commit/21ef1f6f7ecdc9e3724e155e56619aed499e2662)] move htable key tag bits to lower bits
-
-   I plan to also put lambdas into htable, and move captures analysis and
-   syntactic structure checks to the parsing stage.
    

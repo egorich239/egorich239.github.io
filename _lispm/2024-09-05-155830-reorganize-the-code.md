@@ -110,17 +110,60 @@ alternative that would make me happier.
 [^1]: Or as any immediately evaluated expression where it participates,     e.g. `(letrec ((c (* 2 c))) c)`
 ### verbose branch logs
 
-* [[e661713e](https://github.com/egorich239/lispm/commit/e661713e5ee750762dac75a71e7c85cf4486f9f0)] step 12: massively rename types and functions
+* [[fff6eea8](https://github.com/egorich239/lispm/commit/fff6eea809e8dcf0a12708eb4d87f04935bba76c)] step 1: chunk API into logical blocks
 
-* [[33a6e50b](https://github.com/egorich239/lispm/commit/33a6e50bea7a2c78f93e3b7a02fa1fd9f9af1797)] step 11: provide some structure to the directory
-
-   liblispm/ the source code
-   tests/    tests
-   build/	  target directory for builds
+   sidenote: forcing lispm_cons_alloc always_inline blows up the size from
+   4044 to 4500+ bytes
    
-   Builds are now coming in four fashions: 00 01 10 11.
-   00 is non verbose, non assertive, optimized for size
-   11 is the opposite
+* [[ea479a1e](https://github.com/egorich239/lispm/commit/ea479a1e9e1eb41ba176a7c2e9ea15f6475db70d)] step 2: reorganize builtins
+
+   I now allocate the top of the stack to hold the symbols for builtins.
+   
+   I will likely later make it once again a property of `Lispm` object, and
+   remove the GNU extensions and linker script.
+   
+* [[a69666ab](https://github.com/egorich239/lispm/commit/a69666ab9867ec8921ba4f58215b2fefff7fd692)] step 3: further separate parts of the VM
+
+   lispm.c:      core syntax of the language
+   lispm-funs.c: core functions
+   lrt0.c:       further memory management functions
+   
+* [[787157f6](https://github.com/egorich239/lispm/commit/787157f6f2545705468ac0bd05d20799eb52da7b)] step 3: finalize the builtins
+
+   I gave up on the idea of making builtins independent of linker, as it is
+   hard to then identify builtin within an extension module.
+   
+* [[9b24d706](https://github.com/egorich239/lispm/commit/9b24d706c9a3c894fffe2c486a3828503b472861)] step 4: introduce FOR_EACH to iterate over lists
+
+* [[d9d9ab7c](https://github.com/egorich239/lispm/commit/d9d9ab7c320bad18a6ab747628d8f0f8f85103e0)] step 5: introduce triplets
+
+   Reuse lambda stack word internally as a triplet object.
+   In fact, the semantics of the triplet is always derived from the
+   context, so I can even make it a part of public API.
+   
+* [[fa593206](https://github.com/egorich239/lispm/commit/fa593206a417176a34e39f09f5076805a8b06ee1)] step 6: introduce triplets, quads, and pentas
+
+   I noticed several `C(C(a, b), c)` patterns in `lispm.c` which made me
+   think. In the end I realize that `lambda` is not expressed by the
+   triplet itself, but rather by the pair `C(SYM_LAMBDA, triplet)`, and the
+   triplet can be either prototype or closure. Nothing then prevents me
+   from reusing the triplets for other purposes as well.
+   
+* [[e2eac8fd](https://github.com/egorich239/lispm/commit/e2eac8fd5ac5f22a1637571f539c0000a169e906)] step 7: prep to change layout of stack objects
+
+* [[cd771127](https://github.com/egorich239/lispm/commit/cd7711279c984b4a519c4613d6675409267682b3)] step 8: put "next" field at the head of stack obj
+
+   This simplifies `list_reverse_inplace()` and anticipated changes to GC.
+   
+* [[34ccbf85](https://github.com/egorich239/lispm/commit/34ccbf8550e78ab491522af0bd9f1cc68972bffb)] step 9: introduce '(apply)' special form
+
+   This makes the program after semantic stage look very uniform:
+   it is either an atom, or a pair `(form args)`, where `form` is a special
+   form, and args are its parameters.
+   
+   In case of the `(apply)` form specifically the first argument can either
+   be a builtin function, or a lambda, it can never be a special form
+   itself, which simplifies the logic of evapply drastically.
    
 * [[e11b88f7](https://github.com/egorich239/lispm/commit/e11b88f7d6c0ffdc16dec08ac77990ea5cb71c32)] step 10: patch a bug in letrec
 
@@ -134,58 +177,14 @@ alternative that would make me happier.
    This can be achieved by unbinding all the `letrec` names before passing
    them into the implementation lambda.
    
-* [[34ccbf85](https://github.com/egorich239/lispm/commit/34ccbf8550e78ab491522af0bd9f1cc68972bffb)] step 9: introduce '(apply)' special form
+* [[33a6e50b](https://github.com/egorich239/lispm/commit/33a6e50bea7a2c78f93e3b7a02fa1fd9f9af1797)] step 11: provide some structure to the directory
 
-   This makes the program after semantic stage look very uniform:
-   it is either an atom, or a pair `(form args)`, where `form` is a special
-   form, and args are its parameters.
+   liblispm/ the source code
+   tests/    tests
+   build/	  target directory for builds
    
-   In case of the `(apply)` form specifically the first argument can either
-   be a builtin function, or a lambda, it can never be a special form
-   itself, which simplifies the logic of evapply drastically.
+   Builds are now coming in four fashions: 00 01 10 11.
+   00 is non verbose, non assertive, optimized for size
+   11 is the opposite
    
-* [[cd771127](https://github.com/egorich239/lispm/commit/cd7711279c984b4a519c4613d6675409267682b3)] step 8: put "next" field at the head of stack obj
-
-   This simplifies `list_reverse_inplace()` and anticipated changes to GC.
-   
-* [[e2eac8fd](https://github.com/egorich239/lispm/commit/e2eac8fd5ac5f22a1637571f539c0000a169e906)] step 7: prep to change layout of stack objects
-
-* [[fa593206](https://github.com/egorich239/lispm/commit/fa593206a417176a34e39f09f5076805a8b06ee1)] step 6: introduce triplets, quads, and pentas
-
-   I noticed several `C(C(a, b), c)` patterns in `lispm.c` which made me
-   think. In the end I realize that `lambda` is not expressed by the
-   triplet itself, but rather by the pair `C(SYM_LAMBDA, triplet)`, and the
-   triplet can be either prototype or closure. Nothing then prevents me
-   from reusing the triplets for other purposes as well.
-   
-* [[d9d9ab7c](https://github.com/egorich239/lispm/commit/d9d9ab7c320bad18a6ab747628d8f0f8f85103e0)] step 5: introduce triplets
-
-   Reuse lambda stack word internally as a triplet object.
-   In fact, the semantics of the triplet is always derived from the
-   context, so I can even make it a part of public API.
-   
-* [[9b24d706](https://github.com/egorich239/lispm/commit/9b24d706c9a3c894fffe2c486a3828503b472861)] step 4: introduce FOR_EACH to iterate over lists
-
-* [[787157f6](https://github.com/egorich239/lispm/commit/787157f6f2545705468ac0bd05d20799eb52da7b)] step 3: finalize the builtins
-
-   I gave up on the idea of making builtins independent of linker, as it is
-   hard to then identify builtin within an extension module.
-   
-* [[a69666ab](https://github.com/egorich239/lispm/commit/a69666ab9867ec8921ba4f58215b2fefff7fd692)] step 3: further separate parts of the VM
-
-   lispm.c:      core syntax of the language
-   lispm-funs.c: core functions
-   lrt0.c:       further memory management functions
-   
-* [[ea479a1e](https://github.com/egorich239/lispm/commit/ea479a1e9e1eb41ba176a7c2e9ea15f6475db70d)] step 2: reorganize builtins
-
-   I now allocate the top of the stack to hold the symbols for builtins.
-   
-   I will likely later make it once again a property of `Lispm` object, and
-   remove the GNU extensions and linker script.
-   
-* [[fff6eea8](https://github.com/egorich239/lispm/commit/fff6eea809e8dcf0a12708eb4d87f04935bba76c)] step 1: chunk API into logical blocks
-
-   sidenote: forcing lispm_cons_alloc always_inline blows up the size from
-   4044 to 4500+ bytes
-   
+* [[e661713e](https://github.com/egorich239/lispm/commit/e661713e5ee750762dac75a71e7c85cf4486f9f0)] step 12: massively rename types and functions

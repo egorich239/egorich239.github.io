@@ -169,34 +169,34 @@ To wrap things up: in order to implement tail calls:
 [^3]: One impractical alternative to that would be to cache _all_     variables in the VM on every eval.
 ### verbose branch logs
 
-* [[9e0003f6](https://github.com/egorich239/lispm/commit/9e0003f6b74e5945b243713ad4531fd8eff75c1c)] step 8: maintain current frame in M.frame
+* [[a776e190](https://github.com/egorich239/lispm/commit/a776e1909c7edbe5e3c8b4c1e0a79825082cc537)] step 1: Make program completely uniform
 
-   This allows me to avoid the communication protocol between `ev*()` and
-   `eval()` where they output additional list of assignments together with
-   the continuation.
+   I make every program recursively consist of `(FORM, args)` pairs,
+   including for quoting and resolving a name. This is a prerequisite to
+   turning eval into a loop.
    
-* [[dbb33ed1](https://github.com/egorich239/lispm/commit/dbb33ed195227d9e0fd149f8998baee8ff0dfeed)] step 7: some cleanup and dedup
+* [[9dad56f4](https://github.com/egorich239/lispm/commit/9dad56f4b3c0abc494739b8cd21017906c4d49a4)] step 2: Make _all_ recursive ev*() use eval
+
+   Now everything is ready to change the eval to the loop.
+   
+* [[f4bcd616](https://github.com/egorich239/lispm/commit/f4bcd6162233041ba0a075eb331cc432bcc066d7)] step 3: implement tailrec
+
+   Turned out to be more sophisticated than I anticipated.
+   
+* [[aa49b491](https://github.com/egorich239/lispm/commit/aa49b4914492f0e6f2511bdf7655f2b19f75f08f)] step 4: minor renamings
+
+* [[670c3091](https://github.com/egorich239/lispm/commit/670c30917c54f957dbed48fe5ff2bde8c3ad264b)] step 5: shallow gc
 
 * [[c4295bb4](https://github.com/egorich239/lispm/commit/c4295bb42b5b62d9c0cc2022e9798ccda8204b79)] step 6: oops! I actually never GC'd!
 
    I moved the objects around, but never reset the M.sp pointer :-)
    Fixed
    
-* [[670c3091](https://github.com/egorich239/lispm/commit/670c30917c54f957dbed48fe5ff2bde8c3ad264b)] step 5: shallow gc
+* [[dbb33ed1](https://github.com/egorich239/lispm/commit/dbb33ed195227d9e0fd149f8998baee8ff0dfeed)] step 7: some cleanup and dedup
 
-* [[aa49b491](https://github.com/egorich239/lispm/commit/aa49b4914492f0e6f2511bdf7655f2b19f75f08f)] step 4: minor renamings
+* [[9e0003f6](https://github.com/egorich239/lispm/commit/9e0003f6b74e5945b243713ad4531fd8eff75c1c)] step 8: maintain current frame in M.frame
 
-* [[f4bcd616](https://github.com/egorich239/lispm/commit/f4bcd6162233041ba0a075eb331cc432bcc066d7)] step 3: implement tailrec
-
-   Turned out to be more sophisticated than I anticipated.
-   
-* [[9dad56f4](https://github.com/egorich239/lispm/commit/9dad56f4b3c0abc494739b8cd21017906c4d49a4)] step 2: Make _all_ recursive ev*() use eval
-
-   Now everything is ready to change the eval to the loop.
-   
-* [[a776e190](https://github.com/egorich239/lispm/commit/a776e1909c7edbe5e3c8b4c1e0a79825082cc537)] step 1: Make program completely uniform
-
-   I make every program recursively consist of `(FORM, args)` pairs,
-   including for quoting and resolving a name. This is a prerequisite to
-   turning eval into a loop.
+   This allows me to avoid the communication protocol between `ev*()` and
+   `eval()` where they output additional list of assignments together with
+   the continuation.
    

@@ -10,6 +10,10 @@ This study is devoted to a C implementation of a small VM for a dialect of Lisp.
 It is accompanied by a series of blog posts, that I kept directly in the commit
 messages of the `main` branch.
 
+The easiest way to try it out on a Linux system is to install `libreadline.so`
+and its headers using system's package manager,
+after which one can do `make repl && build/repl/repl` from the repo root.
+
 I aimed to fit the implementation in 4K of code for the core language on x86-64 platform.
 The core language in `lispm.c` supports `lambda`, `let`, `letrec` constructs,
 has syntax for unsigned numbers 2 bits shorter than the native, implements
