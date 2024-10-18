@@ -4,7 +4,8 @@ title: main()
 list_title: " "
 ---
 
-My name is Ivan Egorov. I am a software engineer ([cv](/cv.pdf)), and a sailor ([logbook](/logbook.html)).
+My name is Ivan Egorov. I am a software engineer ([cv](/cv.pdf), [github](https://github.com/egorich239)),
+and a sailor ([logbook](/logbook.html)).
 
 My hobbyist studies:
 * [a minimalistic LISP implementation in C](/lispm)
