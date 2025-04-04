@@ -1,116 +1,81 @@
-% Kudos to Cies Breijs for the template.
-\documentclass[10pt,a4paper]{article}
-\usepackage[a4paper,margin=0.5in]{geometry}
-\usepackage[english]{babel}
-\hyphenation{Some-long-word}
+\documentclass[11pt,a4paper,sans]{moderncv}
+\moderncvstyle{classic}
+\moderncvcolor{blue}
 
-\usepackage{resume}
+\usepackage[scale=0.85]{geometry}
+\usepackage{multicol}
+
+% Personal info
+\name{Ivan}{Egorov}
+\title{Senior Software Engineer}
+\email{me@egori.ch}
+%\homepage{egori.ch}
+\social[linkedin]{in/egorich}
+\social[github]{egorich239}
+\address{Zürich}{Switzerland}
 
 \begin{document}
-\sloppy % this to relax whitespacing in favour of straight margins
 
-\maintitle{Ivan Egorov}{}{Last update on \today}
-\nobreakvspace{0.3em}  % add some page break averse vertical spacing
+\makecvtitle
 
-\noindent\href{mailto:me@egori.ch}{me@egori.ch}\sbull
-\href{https://github.com/egorich239}{github.com/egorich239}\sbull
-\href{http://linkedin.com/in/egorich}{linkedin.com/in/egorich}
-\\
-Zürich\sbull
-Switzerland
+\section{Summary}
+Experienced Software Engineer with 18 years of expertise spanning system runtime
+development, developer infrastructure, large-scale data processing, and AI/ML
+applications. Proven ability to deliver high-performance, scalable systems
+across diverse domains. Strong proficiency in C++, Python, and systems
+programming—from bare metal to distributed architectures at scale.
 
-\spacedhrule{0.6em}{-0.4em}
+\section{Experience}
 
-\roottitle{Summary}
-\noindent Software Engineer with 15 years of experience, I have contributed to
-large scale services and data processing pipelines, OS drivers and system libraries,
-compilers, debuggers and desktop applications.
-
-\spacedhrule{0.6em}{-0.4em}
-
-\roottitle{Experience}
-
-\headedsection
-  {\href{https://www.daedalean.ai/}{Daedalean AI}}
-  {\textsc{Zürich, Switzerland}} {%
-  \headedsubsection
-    {Software Engineer}
-    {Aug \apo22 -- present}
-    {\bodytext{Daedalean is building autonomous piloting software systems for civil aircraft of today and advanced aerial mobility of tomorrow\\
-    \sbull Designed and developed OS drivers and image processing applications for the PilotEye visual traffic detection system.\\
-    \sbull Implemented a prototype of a visual obstacle detection system.
-    }}
+\cventry{Aug 2022 -- Mar 2025}{Software Engineer}{Daedalean AI}{Zürich, Switzerland}{}{
+Developing autonomous piloting systems for aviation.
+\begin{itemize}
+    \item Designed and developed OS drivers and image processing applications
+    for the PilotEye visual traffic detection system.
+    \item Built a prototype for visual obstacle detection system.
+    \item Ported an in-house IPC technology runtime to Rust.
+\end{itemize}
 }
 
-\headedsection
-  {Facebook}
-  {\textsc{Zürich, Switzerland}} {%
-  \headedsubsection
-    {Software Engineer, Oculus}
-    {Nov \apo19 -- Jun \apo22}
-    {\bodytext{\sbull Facilitated migration of Oculus from Linux/Android to a novel non-POSIX OS developed inhouse: implemented a pthread library,integrated BUCK build system with the OS toolchain to provide unit testing facilities, curated the migration of first- and third-party libraries to the new OS.\\
-    \sbull Refactored the internals an Oculus C++ logging library to reduce its binary footprint by an order of magnitude.\\
-    \sbull Designed an IDL language and the accompanying C++ codegen for an inhouse IPC library.}}
+\cventry{Nov 2019 -- Jun 2022}{Software Engineer, Oculus}{Facebook}{Zürich, Switzerland}{}{
+Key contributor to Oculus' OS and runtime platform migration.
+\begin{itemize}
+    \item Led migration to a new non-POSIX OS: implemented `pthread` library,
+    ported internal and third-party libraries.
+    \item Designed an IDL and C++ codegen system for in-house IPC framework.
+    \item Achieved a multi-fold reduction of binary footprint of Oculus C++ logging library.
+\end{itemize}
 }
 
-\headedsection
-  {Google}
-  {\textsc{Zürich, Switzerland}} {%
-  \headedsubsection
-    {Software Engineer}
-    {Jan \apo10 -- Oct \apo19}
-    {\bodytext{Contributed to Chrome, Maps, Assistant, and YouTube, in SWE and SRE roles.\\
-    \sbull Optimized desktop-focused the Google Maps Transit (“get me from Zurich to Bern by public transport”) backends to  early smartphone clients with their lower bandwidth, higher latency, smaller screens. Contributed to API and algorithmic changes, resources estimates and provisioning, incidents investigations and stability fixes that would make the routing useful on desktop and mobile devices. Seamlessly replaced a redundant backend with an endpoint in a more generic service, coordinated the migration of downstream systems to the new endpoints. Implemented realtime GTFS data ingestion into the routing engine.\\
-    \sbull Optimized the latency and resource consumption of a daily logs processing pipeline evaluating a Google Maps quality metric.\\
-    \sbull Introduced query stream sharding in a YouTube personalization cache service, increasing the cache hit rate and cache memory utiltization.}
-    }
+\cventry{Jan 2010 -- Oct 2019}{Software Engineer}{Google}{Zürich, Switzerland}{}{
+Contributed to Chrome, Maps, Assistant, and YouTube in SWE and SRE roles.
+\begin{itemize}
+    \item Built and maintained a micro-benchmarking infrastructure for Chrome.
+    \item Optimized Google Maps Transit for early smartphones: backend and
+    algorithm tuning, resource forecasting, stability improvements.
+    \item Improved latency and cost of a Maps quality evaluation pipeline.
+    \item Boosted cache hit rate in YouTube personalization via query stream sharding.
+\end{itemize}
 }
 
-\headedsection
-  {EMC}
-  {\textsc{Saint-Petersburg, Russia}} {%
-  \headedsubsection  % sets the header for a subsection and contains usually body text
-    {Software Engineer}
-    {Jan \apo09 -- Dec \apo09}
-    {\bodytext{I worked in a team building a performance analysis tool for large data storage systems shortly after the tool has been migrated from C++ to C\#.\\
-    \sbull Introduced systematic unit testing, lead migration to SVN, contributed fixes and improvements to the analysis tool.}}
+\cventry{2009 -- 2010}{Software Engineer}{EMC}{St. Petersburg, Russia}{}{
+Worked on a performance analysis tool for large-scale storage systems.
+Introduced unit testing, migrated team codebase to SVN, contributed various
+improvements to the tool.
 }
 
-\headedsection
-  {Intel}
-  {\textsc{Saint-Petersburg, Russia}} {%
-  \headedsubsection
-    {Software Engineer, Intern}
-    {2007 -- 2008}
-    {\bodytext{I worked in a Compiler Team, supporting the development of a novel data processing chip.\\
-    \sbull Developed a debugger for the chip's VLIW programs, supporting multiple backends: software emulator, FPGA simulator, and the hardware.\\
-    \sbull Conducted research on a more compact instruction format for the chip.}}
+\cventry{2007 -- 2008}{Compiler Intern}{Intel}{St. Petersburg, Russia}{}{
+Built VLIW debugger for implementations (in emulator, FPGA, and hardware) of a
+custom chip architecture. Researched instruction set compaction.
 }
 
-\spacedhrule{0.6em}{-0.4em}
+\section{Education}
+\cventry{2004 -- 2009}{MSc in Software Engineering}{Saint-Petersburg State University}{St. Petersburg, Russia}{}{}
 
-\roottitle{Education}
-
-\headedsection
-  {Saint-Petersburg State University}
-  {\textsc{Saint-Petersburg, Russia}} {%
-  \headedsubsection
-    {MSc in Software Engineering}
-    {2004 -- 2009}
-    {}
-}
-
-\spacedhrule{0.6em}{-0.4em}
-
-\roottitle{Skills}
-
-\inlineheadsection  % special section that has an inline header with a 'hanging' paragraph
-  {Technical expertise:}
-  {I have practical experience with \CPP, C, Go, Rust, Python, and navigate freely between the layers of abstraction from CPU-specific optimizations to large scale pipeline processing.}
-
-\vspace{0.5em}
-\inlineheadsection
-  {Natural languages:}
-  {Russian \emph{(mother tongue)}, English \emph{(full professional proficiency)}, German \emph{(elementary proficiency)}.}
+\section{Skills}
+\cvitem{Languages}{C++, C, Rust, Python, Go}
+\cvitem{Systems}{Runtime libraries, IPC, logging}
+\cvitem{Scale}{Data pipelines, distributed systems, performance optimization}
+\cvitem{Spoken}{Russian (native), English (fluent), German (intermediate)}
 
 \end{document}
