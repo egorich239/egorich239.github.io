@@ -22,4 +22,6 @@ header_pages:
   - index.md
   - logbook.md
   - waters.md
-  
+
+exclude:
+  - deb
