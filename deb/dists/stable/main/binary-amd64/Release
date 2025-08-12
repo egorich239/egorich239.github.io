@@ -1,0 +1,5 @@
+Component: main
+Origin: egori.ch
+Label: egori.ch personal repository
+Architecture: amd64
+Description: egori.ch personal packages

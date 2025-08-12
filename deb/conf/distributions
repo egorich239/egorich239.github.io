@@ -1,0 +1,7 @@
+Origin: egori.ch
+Label: egori.ch personal repository
+Codename: stable
+Architectures: amd64 arm64
+Components: main
+Description: egori.ch personal packages
+SignWith: DA0D4ED0B6E992F6BBDD914DCB723D925753CC2E

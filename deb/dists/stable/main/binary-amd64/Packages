@@ -1,0 +1,16 @@
+Package: tresor
+Version: 0.1.0-1
+Architecture: amd64
+Maintainer: Ivan Egorov <me@egori.ch>
+Installed-Size: 10247
+Depends: libc6 (>= 2.34), libsqlite3-0 (>= 3.36.0), libssl3t64 (>= 3.0.0)
+Priority: optional
+Section: admin
+Filename: pool/main/t/tresor/tresor_0.1.0-1_amd64.deb
+Size: 2357584
+SHA256: 079d72a4ba44ad61a13a404ad2eb09e51f7f248906b45fa38837936dd2e8c5d4
+SHA1: e21a260776f50f07c19bf46b14ec17a31ba22128
+MD5sum: 9d90c5d7e464393257d8c3d64c7696fb
+Description: A simplistic secrets storage for personal use
+ test
+

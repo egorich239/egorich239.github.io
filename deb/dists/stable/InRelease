@@ -1,0 +1,42 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: egori.ch
+Label: egori.ch personal repository
+Codename: stable
+Date: Tue, 12 Aug 2025 13:39:37 UTC
+Architectures: amd64 arm64
+Components: main
+Description: egori.ch personal packages
+MD5Sum:
+ e1e0bf170ac49157c65dd392568b1341 516 main/binary-amd64/Packages
+ 7dfc1780c8df38fd36fb0acf62b71153 386 main/binary-amd64/Packages.gz
+ 8c952736706399d6ca87b1cd97fdea43 129 main/binary-amd64/Release
+ d41d8cd98f00b204e9800998ecf8427e 0 main/binary-arm64/Packages
+ 7029066c27ac6f5ef18d660d5741979a 20 main/binary-arm64/Packages.gz
+ 1905d22b6b72dcc4fc52979209b40973 129 main/binary-arm64/Release
+SHA1:
+ 42781d1782fb660cf8a54f4af2c49c9328b25f1d 516 main/binary-amd64/Packages
+ 6b226c090e45ea4cc16aa33664da0c930b94989f 386 main/binary-amd64/Packages.gz
+ 8acb3d05953c51c99ccbfdac276131e620bc46ea 129 main/binary-amd64/Release
+ da39a3ee5e6b4b0d3255bfef95601890afd80709 0 main/binary-arm64/Packages
+ 46c6643f07aa7f6bfe7118de926b86defc5087c4 20 main/binary-arm64/Packages.gz
+ e411187b7fc0b22e43cda6b9ccf8b48e9a1a7c09 129 main/binary-arm64/Release
+SHA256:
+ 3fb1f936d34cc6a946d67a22cb220c483988ea4eedc931033476f14cb2b40273 516 main/binary-amd64/Packages
+ b8dd8162d17ecf9162b6485033db7e1f68cfd5c930163ef5c0e264472cdd46ca 386 main/binary-amd64/Packages.gz
+ 4a1534a2aeddbf217952fc66a5d9db91ae8d4ee042332279eb7fef687426c77d 129 main/binary-amd64/Release
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0 main/binary-arm64/Packages
+ 59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2 20 main/binary-arm64/Packages.gz
+ 94f5c38c268b9171707709dca14feaaac13f7fd75f8b579570fed42ee9cfb8b8 129 main/binary-arm64/Release
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEE2g1O0Lbpkva73ZFNy3I9kldTzC4FAmibRCMACgkQy3I9kldT
+zC7Ikwf9GAHZTj4/myvSNjbGw8DK8dT90cQLjcXqQCBWnJP8NDy8IuswpItnEPvc
+DRrVjmf3M0dWibDXskLP66w0doH3u1HZhzMQSjxhq6ce0U1d1eHt/uSsVs8/w3s7
+Z4a9PBpUjLEuf37BaPI5fD6Nf/gWrKtAGBG3lw2k9FCxBLHz4lKbTMhtWb/35v0f
+5X8qddVKkMAO4+WACR88SAjbtI5gi1Bgo0aFZgb6yYhCS/zmwSskUqNCLJh0PVgS
+sW0g6ug4YghuYEGtjS5wF0qyGtyWFb7MDdwnZwseRbrcrtRscQNtZDXJPrjWs53H
+8N38TAZcR7ouDixNqSzSbJtG5nqLrw==
+=X/cO
+-----END PGP SIGNATURE-----
