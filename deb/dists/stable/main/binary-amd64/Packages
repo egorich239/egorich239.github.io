@@ -1,15 +1,32 @@
 Package: tresor
-Version: 0.1.1-1
+Version: 0.1.2-1
 Architecture: amd64
 Maintainer: Ivan Egorov <me@egori.ch>
-Installed-Size: 10219
-Depends: libc6 (>= 2.34), libsqlite3-0 (>= 3.36.0), libssl3t64 (>= 3.0.0)
+Installed-Size: 4944
+Depends: libc6 (>= 2.34), libssl3t64 (>= 3.0.0)
+Priority: optional
+Section: utils
+Filename: pool/main/t/tresor/tresor_0.1.2-1_amd64.deb
+Size: 1518220
+SHA256: dd501defc50970ddf439b931c8eaa2d04b0c56e7061b8b401146c024ad7dd38f
+SHA1: 31749cfdcc1a164d0531d9b10cfe66fd6e4d36b0
+MD5sum: 4ba9f20320d503e4e935e1dff3602e5d
+Description: A simplistic secrets storage for personal use
+ Tresor CLI tool package
+
+Package: tresor-srv
+Version: 0.1.2-1
+Architecture: amd64
+Maintainer: Ivan Egorov <me@egori.ch>
+Installed-Size: 5280
+Depends: systemd, tresor (>= $auto)
 Priority: optional
 Section: admin
-Filename: pool/main/t/tresor/tresor_0.1.1-1_amd64.deb
-Size: 2348052
-SHA256: 0d6a4e740b3f8d8100af5c007cc1e8f3a6f620681276c84bf9ecf50fb0b92f99
-SHA1: cd8ab6184820b85eb3702be4640c60d21505cd7b
-MD5sum: 262d0a216965cfbfc80727421db76023
+Filename: pool/main/t/tresor-srv/tresor-srv_0.1.2-1_amd64.deb
+Size: 1561960
+SHA256: 623797c39e5dda277398cd2f7bfb850781bf778df56b8a781fec14a2d14b365f
+SHA1: ca97e1fea040c19734dcc50aec7ffbb12f68f0e9
+MD5sum: f6d859fa62d11b7c5d006d1ca830126e
 Description: A simplistic secrets storage for personal use
+ Tresor server
 

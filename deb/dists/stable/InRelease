@@ -4,39 +4,39 @@ Hash: SHA512
 Origin: egori.ch
 Label: egori.ch personal repository
 Codename: stable
-Date: Tue, 12 Aug 2025 15:14:41 UTC
+Date: Tue, 12 Aug 2025 22:49:13 UTC
 Architectures: amd64 arm64
 Components: main
 Description: egori.ch personal packages
 MD5Sum:
- 0927129e74322d917356100aa4959787 510 main/binary-amd64/Packages
- 7fb3128575dbe5c95a9f9adc553f9782 385 main/binary-amd64/Packages.gz
+ aa676bdff95d79480f98118c7d23947d 1006 main/binary-amd64/Packages
+ 706e5f0b17ad6bfd31d06d15eeaaeb18 540 main/binary-amd64/Packages.gz
  8c952736706399d6ca87b1cd97fdea43 129 main/binary-amd64/Release
  95d6e072b840ec7b32d1e42c25f50c36 509 main/binary-arm64/Packages
  d0e7fc73e9d6b305a5a56a7bb0602941 384 main/binary-arm64/Packages.gz
  1905d22b6b72dcc4fc52979209b40973 129 main/binary-arm64/Release
 SHA1:
- 52d4daae23b93a5bfaec0b95a130b154934f5b2c 510 main/binary-amd64/Packages
- 6cc64fcd2827710b975f0ff4a08c31d6331fde57 385 main/binary-amd64/Packages.gz
+ feed22cdf45056c5fca9cd80a39298e8bd9f20c6 1006 main/binary-amd64/Packages
+ 734a38cf8f330b21b575ea597c60540c0353d028 540 main/binary-amd64/Packages.gz
  8acb3d05953c51c99ccbfdac276131e620bc46ea 129 main/binary-amd64/Release
  e91a3beb016b35920b62e91cc15e40a9de6fab68 509 main/binary-arm64/Packages
  846e17ce70742994e65420b44e23d89fa015b0a9 384 main/binary-arm64/Packages.gz
  e411187b7fc0b22e43cda6b9ccf8b48e9a1a7c09 129 main/binary-arm64/Release
 SHA256:
- fe0065fe634c7522dfe9e0f88a95f9a1e4dc49c04c40d040abc07ae96a739b02 510 main/binary-amd64/Packages
- 82e31c26e79d76d1b4b446e37f6c546dde9f684568cb6b35f57a8f3f67705296 385 main/binary-amd64/Packages.gz
+ 4979ddf78af3a5b35663b18f6371f6a578b9cf78952d8497f578053eceee53af 1006 main/binary-amd64/Packages
+ e40a540867765ab4e4aa9719053f3b7d00a564929be31732e9fc2a7cc2fd0ace 540 main/binary-amd64/Packages.gz
  4a1534a2aeddbf217952fc66a5d9db91ae8d4ee042332279eb7fef687426c77d 129 main/binary-amd64/Release
  be95632c35eea87291dafcb90bbc8a77e8d2899292d8ba5ef625822c86d8104f 509 main/binary-arm64/Packages
  36de88d5774f0f59d3be4b5ece32ca44a6ea77fa6e0bb767e17e9aaeed4ebedd 384 main/binary-arm64/Packages.gz
  94f5c38c268b9171707709dca14feaaac13f7fd75f8b579570fed42ee9cfb8b8 129 main/binary-arm64/Release
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEE2g1O0Lbpkva73ZFNy3I9kldTzC4FAmibWm8ACgkQy3I9kldT
-zC6CMggAo9p9JbzU2wcNW/9U5X1FWkLXmB/zR07oXw2a7g829gqqbCHKs6B0ZKFr
-j7Ahv5zv2wRFrUSMzYJKHnaWJJzGr+Qh6CtEm+5NvKb/zO9J1N0qaqcG/Bv64Sq9
-us10Oes21L+PT6WmYNhh1ZHlJuBaisZpWw66wJgzX7WdBuoTglp8BRdBxO6/NzLW
-gPT7uQnX82Tc5s54FkdWPjlA0J39y58TkTLU1tO5tjLJ1LoLezFZvK4Lkhuqs2jg
-VkgMlMst4ZRbMhtQxde6oR7iBkIQnhR10+Hg3UwuV4vQhMti/BUxJRrkq2UNnBwR
-Pzi7tAASToXQwNVFOeQ03o8lvudDyQ==
-=BzLU
+iQEzBAEBCgAdFiEE2g1O0Lbpkva73ZFNy3I9kldTzC4FAmibxO4ACgkQy3I9kldT
+zC6RYQf/cDsWHgxF1ex1CpY27Hae0Yk6ASSN39cbnbrC7Exa9XNdjjvQKb7Uqner
+4m1W0g92+wtKRdRZ8gYCOLY91V82RnLXjNErorhWyKrhbwBnKCCCsDyXVyiA103x
+tFpqJUosmnMnI4pOjMoAWhytkX4EgrPB/n8hadCGg5fVF7ecW+LM6koK37T+/l/w
+vZHuR5Uw63KeJ/216opxRTNAIP3eoCl3AhAWzNtltAHKhKvYrbZuzyT+3n8rZTg9
+37hBnjTqkTIIv3eDIekI011j2OnHATDSisk+sCUVMRQaeeAPxcf6EcMpxpiEZxz1
+F3XPTVSB0yzchpATjjXvh1u4wW/GWQ==
+=s5I6
 -----END PGP SIGNATURE-----
