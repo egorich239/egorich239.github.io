@@ -23,5 +23,5 @@ header_pages:
   - logbook.md
   - waters.md
 
-exclude:
+include:
   - deb
