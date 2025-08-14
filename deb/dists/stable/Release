@@ -1,28 +1,28 @@
 Origin: egori.ch
 Label: egori.ch personal repository
 Codename: stable
-Date: Wed, 13 Aug 2025 07:39:40 UTC
+Date: Thu, 14 Aug 2025 15:23:26 UTC
 Architectures: amd64 arm64
 Components: main
 Description: egori.ch personal packages
 MD5Sum:
- 0caad2fb89a7c14036c2993304da4a09 1072 main/binary-amd64/Packages
- f0a81bd682f5c76127e34edd426d7589 551 main/binary-amd64/Packages.gz
+ 5bbdad6e5f068ec5d566bcda43edde86 1069 main/binary-amd64/Packages
+ ed712759754e4751cdd536b98c3ee084 555 main/binary-amd64/Packages.gz
  8c952736706399d6ca87b1cd97fdea43 129 main/binary-amd64/Release
- 6b9ffc350a01288d586d812dfe80ad63 1072 main/binary-arm64/Packages
- 7c33ac520ba87d2fade7ba569ffff9b0 553 main/binary-arm64/Packages.gz
+ 086a9945c745cec2bf874d719bd3912d 1069 main/binary-arm64/Packages
+ 70d519901a6cd19fb1f71061013dbab8 559 main/binary-arm64/Packages.gz
  1905d22b6b72dcc4fc52979209b40973 129 main/binary-arm64/Release
 SHA1:
- 0c3ce99d7e119560f89ffb5c6ec1c03e8042fe72 1072 main/binary-amd64/Packages
- 87f5adc96cec48904f45108fdd8bf8d6eee82c72 551 main/binary-amd64/Packages.gz
+ d0fbe66ab5bde1ce7c37bd944585fc90d9784a18 1069 main/binary-amd64/Packages
+ be14b897010ffad712ba1509960e37613cd92641 555 main/binary-amd64/Packages.gz
  8acb3d05953c51c99ccbfdac276131e620bc46ea 129 main/binary-amd64/Release
- 7faf90bc0c6c0969732c20222b31f17f2709cbb7 1072 main/binary-arm64/Packages
- b80a27384d6e9aceba58480d5d7ccced999edb00 553 main/binary-arm64/Packages.gz
+ 2b9a34584376a66b62c4df17dc5bf12141d01689 1069 main/binary-arm64/Packages
+ 1a1c02a7af8bed7c13cce5eb651c6aafc8cf2460 559 main/binary-arm64/Packages.gz
  e411187b7fc0b22e43cda6b9ccf8b48e9a1a7c09 129 main/binary-arm64/Release
 SHA256:
- a75527363a142c00512800cf9c92d612b3785c32764360031826c5ceeece51e1 1072 main/binary-amd64/Packages
- 005b5cf5eb5235e96884cbc29461512c82e72f441b0847009c93c730c275ce2f 551 main/binary-amd64/Packages.gz
+ 10136b33dafe3030bfeb57dd6eaf147e72d0ceaa29eff06e4a8beed5d041e6ac 1069 main/binary-amd64/Packages
+ dafeee18c1b9461a84bff6a7041a046c8c60b3b766808e178b1def3c48df006c 555 main/binary-amd64/Packages.gz
  4a1534a2aeddbf217952fc66a5d9db91ae8d4ee042332279eb7fef687426c77d 129 main/binary-amd64/Release
- 2b1b5cdc07cb19110862e27bad7418423e62f1dfd4eb61767b10e77eb06b91ee 1072 main/binary-arm64/Packages
- f927f1884d3f92226fa7f1f876c940e44d4d74f3fb0ce6c0f78ac0300877cd71 553 main/binary-arm64/Packages.gz
+ e6f93aad41dae36ee15a071590cb86e74177ae892f02f9dc62689f3ee1f97f39 1069 main/binary-arm64/Packages
+ a7875a43474a34cc4b04b459c4cf5b933bc6fb63d3a46513c08fe13db4eaf9d3 559 main/binary-arm64/Packages.gz
  94f5c38c268b9171707709dca14feaaac13f7fd75f8b579570fed42ee9cfb8b8 129 main/binary-arm64/Release
