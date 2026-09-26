@@ -1,0 +1,248 @@
+/* book.css -- the page's look: the book as the page, stage0's source on
+   its own ground under the one banner, and the Doom box fixed in the
+   lower right corner in its three states (corner, full, min). */
+
+:root {
+  --bar: 260px;
+}
+
+body {
+  margin: 0;
+  padding-left: var(--bar);
+  background: #111;
+  color: #ccc;
+  font: 13px/1.4 monospace;
+}
+
+body.dragging {
+  user-select: none;
+}
+
+/* The contents bar scrolls on its own, as wide as --bar, the handle on
+   its right edge dragging that; a long name is trimmed from the left,
+   the rtl outer box putting the ellipsis there while the inner span
+   keeps the name's own order. */
+#contents {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--bar);
+  box-sizing: border-box;
+  padding: 8px 0;
+  overflow-y: auto;
+  background: #181818;
+  border-right: 1px solid #333;
+}
+
+#handle {
+  position: fixed;
+  left: calc(var(--bar) - 3px);
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  cursor: col-resize;
+  z-index: 2;
+}
+
+#handle:hover {
+  background: #444;
+}
+
+#contents h2 {
+  margin: 8px 10px 2px;
+  font: inherit;
+  font-weight: bold;
+  color: #777;
+}
+
+#contents a, #contents .name {
+  display: block;
+  padding: 1px 10px;
+  color: #aaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#contents a {
+  text-decoration: none;
+  direction: rtl;
+  text-align: left;
+}
+
+#contents a span {
+  direction: ltr;
+  unicode-bidi: bidi-override;
+}
+
+#contents .name {
+  cursor: pointer;
+}
+
+#contents .name::before {
+  content: "\25BE ";
+  color: #666;
+}
+
+#contents .folded > .name::before {
+  content: "\25B8 ";
+}
+
+#contents .folded > .kids {
+  display: none;
+}
+
+#contents a:hover, #contents .name:hover {
+  color: #eee;
+}
+
+#contents .current {
+  color: #dfd;
+  background: #2a3a2a;
+}
+
+#banner {
+  padding: 16px 24px 8px;
+  color: #eee;
+  background: #1e2a1e;
+}
+
+#stage0 {
+  margin: 0;
+  padding: 8px 24px 16px;
+  white-space: pre;
+  color: #dfd;
+  background: #1e2a1e;
+}
+
+#book {
+  position: relative;
+  padding: 0 24px;
+  overflow-x: clip;
+}
+
+#book .spacer {
+  width: 1px;
+}
+
+#book .window, #book .probe {
+  position: absolute;
+  left: 24px;
+  margin: 0;
+  white-space: break-spaces;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  font: inherit;
+}
+
+#book .probe {
+  visibility: hidden;
+  white-space: pre;
+}
+
+/* Every line is a div of at least one row (--row is the measured cell
+   height); a NUL byte's line is the seam rule across the column. */
+#book .window div {
+  min-height: var(--row);
+}
+
+#book .window .nul {
+  height: var(--row);
+  position: relative;
+}
+
+#book .window .nul::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 2px solid #d66;
+}
+
+#doom {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  background: #000;
+  box-shadow: 0 0 12px #000;
+}
+
+#doom canvas {
+  display: block;
+  image-rendering: pixelated;
+}
+
+#doom.corner canvas {
+  width: 33vw;
+  height: auto;
+}
+
+#doom.full {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #111;
+  box-shadow: none;
+}
+
+#doom.full canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#doom.min canvas, #doom.min #widgets {
+  display: none;
+}
+
+#doom #tab {
+  display: none;
+  padding: 2px 10px;
+  color: #ddd;
+  cursor: pointer;
+  user-select: none;
+}
+
+#doom.min #tab {
+  display: block;
+}
+
+#widgets {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  display: flex;
+}
+
+#widgets button {
+  width: 24px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  color: #ddd;
+  background: rgba(0, 0, 0, 0.6);
+  font: inherit;
+  cursor: pointer;
+}
+
+#widgets button:hover {
+  background: rgba(60, 60, 60, 0.8);
+}
+
+#note {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2px 6px;
+  color: #f88;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+#note:empty {
+  display: none;
+}
