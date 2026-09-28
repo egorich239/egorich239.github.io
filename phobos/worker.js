@@ -17,10 +17,9 @@ onmessage = async (event) => {
   const {keys, base, resume} = event.data;
   const cells = new Int32Array(keys);
   try {
-    const [image, wad, state] = await Promise.all([
-      fetchBytes(base + "build/image.bin"),
+    const [doom, wad] = await Promise.all([
+      fetchBytes(base + "build/doom.bin"),
       fetchBytes(base + "build/doom1.wad"),
-      resume ? fetchBytes(base + "build/state.bin") : null,
     ]);
     const host = TowerHost.create({
       now: () => performance.now(),
@@ -32,11 +31,9 @@ onmessage = async (event) => {
         return 0;
       },
     });
-    say(2, "tower: image " + image.length + " bytes, wad " + wad.length +
-           " bytes" + (state ? ", state " + state.length + " bytes" : "") +
-           "\n");
-    const status = await TowerHost.run(createTower, host, image, state,
-                                       (path) => base + "build/" + path);
+    say(2, "doom: " + doom.length + " bytes, wad " + wad.length + " bytes\n");
+    const status = await TowerHost.runDoom(createTower, host, doom, wad,
+                                           (path) => base + "build/" + path);
     postMessage({kind: "exit", status});
   } catch (error) {
     say(2, "worker: " + error + "\n");

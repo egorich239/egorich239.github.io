@@ -156,7 +156,9 @@
       fetchText("image.bin", "latin1"),
     ]);
     banner.textContent = "This is the source of the " + size.trim() +
-        "-byte blob that boots everything.";
+        "-byte blob that boots everything. The Doom in the corner was " +
+        "compiled by the toolchain this blob bootstraps, and runs here " +
+        "on its own -- the tower itself is read below, not run.";
     stage0.textContent = source;
     const lines = Book.splitLines(image);
     let highlight = () => {};

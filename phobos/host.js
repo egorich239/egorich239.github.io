@@ -144,6 +144,20 @@ const TowerHost = (() => {
     return module._tower_run(at, image.length, stateAt, stateLength, 0);
   }
 
+  // A program the tower built, run with no tower under it: the image and
+  // the wad on the module's heap, the driver's other entry taken. The
+  // wad is the guest's to open, so the driver writes it where the game
+  // looks; nothing here needs an image of the tower at all.
+  async function runDoom(createTower, host, elf, wad, locateFile) {
+    const module = await createTower({host, locateFile, noExitRuntime: true});
+    host.attach(module);
+    const at = module._malloc(elf.length);
+    module.HEAPU8.set(elf, at);
+    const wadAt = module._malloc(wad.length);
+    module.HEAPU8.set(wad, wadAt);
+    return module._doom_run(at, elf.length, wadAt, wad.length, 0);
+  }
+
   // The bytes at url: the .gz beside it if there is one (the bundle ships
   // the big files that way; a local build has them plain), inflated here
   // unless the host already served it decoded.
@@ -161,7 +175,7 @@ const TowerHost = (() => {
     return new Uint8Array(await response.arrayBuffer());
   }
 
-  return {create, run, keyPush, keyRingBytes, fetchBytes, KEY_RING};
+  return {create, run, runDoom, keyPush, keyRingBytes, fetchBytes, KEY_RING};
 })();
 
 if (typeof module !== "undefined") module.exports = TowerHost;
