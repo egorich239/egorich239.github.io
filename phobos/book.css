@@ -1,6 +1,5 @@
-/* book.css -- the page's look: the book as the page, stage0's source on
-   its own ground under the one banner, and the Doom box fixed in the
-   lower right corner in its three states (corner, full, min). */
+/* book.css -- the page's look: the book as the page, and the Doom box fixed in the lower right corner in its three
+   states (corner, full, min). */
 
 :root {
   --bar: 260px;
@@ -100,20 +99,6 @@ body.dragging {
 #contents .current {
   color: #dfd;
   background: #2a3a2a;
-}
-
-#banner {
-  padding: 16px 24px 8px;
-  color: #eee;
-  background: #1e2a1e;
-}
-
-#stage0 {
-  margin: 0;
-  padding: 8px 24px 16px;
-  white-space: pre;
-  color: #dfd;
-  background: #1e2a1e;
 }
 
 #book {

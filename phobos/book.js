@@ -27,6 +27,25 @@ const Book = (() => {
     return out;
   }
 
+  // Bytes, a Uint8Array, as `hd` shows them: the offset, sixteen bytes in
+  // hex in two groups of eight, and the same bytes as text, a dot for any
+  // that is not printable ASCII. Rows join with newlines, none after the
+  // last.
+  function hexdump(bytes) {
+    const rows = [];
+    for (let at = 0; at < bytes.length; at += 16) {
+      const row = bytes.subarray(at, at + 16);
+      let hex = "", text = "";
+      for (let i = 0; i < 16; i++) {
+        hex += i < row.length ? row[i].toString(16).padStart(2, "0") + " " : "   ";
+        if (i === 7) hex += " ";
+      }
+      for (const b of row) text += b >= 0x20 && b <= 0x7e ? String.fromCharCode(b) : ".";
+      rows.push(at.toString(16).padStart(8, "0") + "  " + hex + " |" + text + "|");
+    }
+    return rows.join("\n");
+  }
+
   // The lines of the text, every NUL byte lifted out as a line of its own.
   function splitLines(text) {
     const out = [];
@@ -225,7 +244,7 @@ const Book = (() => {
     return {scrollToLine};
   }
 
-  return {NUL, OVERSCAN, expandTabs, splitLines, rowOffsets, lastAtMost,
+  return {NUL, OVERSCAN, hexdump, expandTabs, splitLines, rowOffsets, lastAtMost,
           lineAtRow, topLine, windowOf, contents, tree, mount};
 })();
 

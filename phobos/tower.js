@@ -1,5 +1,4 @@
-// tower.js -- the page: the book (stage0's source under its banner, then
-// the image) and the Doom box, a canvas fixed in the corner that the
+// tower.js -- the page: the book (the image from stage0's code on) and the Doom box, a canvas fixed in the corner that the
 // widgets grow to the viewport or fold to a tab. The worker runs the
 // tower; its frames are painted here, its text goes nowhere. Keys reach
 // Doom through the shared key ring whenever the box is not minimized,
@@ -36,18 +35,14 @@
   }
 
   const base = new URL(".", location.href).href;
-  const banner = document.getElementById("banner");
-  const stage0 = document.getElementById("stage0");
   const book = document.getElementById("book");
   const box = document.getElementById("doom");
   const canvas = document.getElementById("screen");
   const context = canvas.getContext("2d");
   const note = document.getElementById("note");
 
-  // The image is bytes; latin1 keeps every byte one character.
-  async function fetchText(path, encoding) {
-    const bytes = await TowerHost.fetchBytes(base + "build/" + path);
-    return new TextDecoder(encoding || "utf-8").decode(bytes);
+  async function fetchBuilt(path) {
+    return TowerHost.fetchBytes(base + "build/" + path);
   }
 
   // Cross-origin isolation on a host that sends no headers: coi.js is
@@ -63,7 +58,7 @@
     location.reload();
   }
 
-  // The contents bar: stage0's source and the stream's sections under
+  // The contents bar: stage0's code and the stream's sections under
   // "bfg", the archive's files as a foldable tree under "filesystem",
   // every entry a link to its first line, indented by depth. Returns the
   // highlighter of the entry at the top of the viewport, given the book's
@@ -106,7 +101,7 @@
       }
     }
     const bfg = document.getElementById("bfg");
-    links.push(link(bfg, "stage0.asm", "stage0.asm", 0, () => stage0.scrollIntoView()));
+    links.push(link(bfg, "stage0", "stage0's code", 0, () => window.scrollTo(0, 0)));
     for (const section of contents.sections) entry(bfg, section.name, section.name, 0, section);
     grow(document.getElementById("fs"), Book.tree(contents.files), 0);
 
@@ -149,18 +144,22 @@
     };
   }
 
-  // The book, in reading order: the banner, stage0's source, the image.
+  // The book, in reading order: the image from its first byte. The head is shown as `hd` shows it, since stage0's NULs and
+  // newlines are not the stream's: five rows, stage0's code and the text
+  // it runs on into, so the dump ends where the preface's heading does.
+  // The text itself starts where stage0's code ends.
+  const DUMP_BYTES = 80;
   async function showBook() {
-    const [size, source, image] = await Promise.all([
-      fetchText("stage0.size"), fetchText("stage0.asm"),
-      fetchText("image.bin", "latin1"),
+    const [size, image] = await Promise.all([
+      fetchBuilt("stage0.size"), fetchBuilt("image.bin"),
     ]);
-    banner.textContent = "This is the source of the " + size.trim() +
-        "-byte blob that boots everything. The Doom in the corner was " +
-        "compiled by the toolchain this blob bootstraps, and runs here " +
-        "on its own -- the tower itself is read below, not run.";
-    stage0.textContent = source;
-    const lines = Book.splitLines(image);
+    const code = Number(new TextDecoder().decode(size).trim());
+    // The dump reads the bytes themselves: a browser's latin1 is
+    // windows-1252, which turns some of them into other characters. The
+    // text keeps one character per byte either way.
+    const dump = Book.hexdump(image.subarray(0, DUMP_BYTES));
+    const text = new TextDecoder("latin1").decode(image.subarray(code));
+    const lines = Book.splitLines(dump + text);
     let highlight = () => {};
     const view = Book.mount(book, lines, (line) => highlight(line));
     highlight = showContents(Book.contents(lines), view);
