@@ -36,6 +36,7 @@
 
   const base = new URL(".", location.href).href;
   const book = document.getElementById("book");
+  const titled = document.getElementById("title");
   const box = document.getElementById("doom");
   const canvas = document.getElementById("screen");
   const context = canvas.getContext("2d");
@@ -58,96 +59,22 @@
     location.reload();
   }
 
-  // The contents bar: stage0's code and the stream's sections under
-  // "bfg", the archive's files as a foldable tree under "filesystem",
-  // every entry a link to its first line, indented by depth. Returns the
-  // highlighter of the entry at the top of the viewport, given the book's
-  // top line (-1 above the book); a folded directory stands in for what
-  // it hides.
-  function showContents(contents, view) {
-    const entries = [], links = [];
-    function link(parent, name, title, depth, go) {
-      const anchor = document.createElement("a");
-      const label = document.createElement("span");
-      anchor.href = "#";
-      anchor.title = title;
-      anchor.style.paddingLeft = 10 + 12 * depth + "px";
-      label.textContent = name;
-      anchor.appendChild(label);
-      anchor.onclick = (event) => { event.preventDefault(); go(); };
-      parent.appendChild(anchor);
-      return anchor;
-    }
-    function entry(parent, name, title, depth, item) {
-      entries.push(item);
-      links.push(link(parent, name, title, depth, () => view.scrollToLine(item.line)));
-    }
-    function grow(parent, nodes, depth) {
-      for (const node of nodes) {
-        if (!node.nodes) { entry(parent, node.name, node.path, depth, node); continue; }
-        const dir = document.createElement("div");
-        const name = document.createElement("div");
-        const kids = document.createElement("div");
-        dir.className = "dir";
-        name.className = "name";
-        kids.className = "kids";
-        name.style.paddingLeft = 10 + 12 * depth + "px";
-        name.textContent = node.name;
-        name.onclick = () => { dir.classList.toggle("folded"); highlight(shown); };
-        dir.appendChild(name);
-        dir.appendChild(kids);
-        parent.appendChild(dir);
-        grow(kids, node.nodes, depth + 1);
-      }
-    }
-    const bfg = document.getElementById("bfg");
-    links.push(link(bfg, "stage0", "stage0's code", 0, () => window.scrollTo(0, 0)));
-    for (const section of contents.sections) entry(bfg, section.name, section.name, 0, section);
-    grow(document.getElementById("fs"), Book.tree(contents.files), 0);
-
-    const starts = entries.map((item) => item.line);
-    let current = null, shown = -1;
-    function highlight(line) {
-      shown = line;
-      let next = links[line < 0 ? 0 : Book.lastAtMost(starts, line) + 1];
-      for (let node = next.parentElement; node; node = node.parentElement) {
-        if (node.classList.contains("folded")) next = node.firstChild;
-      }
-      if (next === current) return;
-      if (current) current.classList.remove("current");
-      current = next;
-      current.classList.add("current");
-      current.scrollIntoView({block: "nearest"});
-    }
-    return highlight;
+  // A title page line: its leading comment marker dimmed, the rest as is.
+  function showName(element, line) {
+    const [, marker, words] = /^([^\w\s]*\s*)(.*)$/.exec(line);
+    const dim = document.createElement("span");
+    dim.className = "marker";
+    dim.textContent = marker;
+    element.textContent = "";
+    element.append(dim, words);
   }
 
-  // The bar's width: dragged at its right edge within its bounds, kept in
-  // localStorage, and followed by the book column through --bar.
-  function resizableBar() {
-    const handle = document.getElementById("handle");
-    let width = 260;
-    function setWidth(wanted) {
-      width = Math.max(120, Math.min(window.innerWidth / 2, wanted));
-      document.documentElement.style.setProperty("--bar", width + "px");
-    }
-    try { setWidth(Number(localStorage.getItem("bar-width")) || width); } catch (e) {}
-    handle.onpointerdown = (event) => {
-      handle.setPointerCapture(event.pointerId);
-      document.body.classList.add("dragging");
-      handle.onpointermove = (move) => setWidth(move.clientX);
-      handle.onpointerup = () => {
-        handle.onpointermove = null;
-        document.body.classList.remove("dragging");
-        try { localStorage.setItem("bar-width", String(width)); } catch (e) {}
-      };
-    };
-  }
-
-  // The book, in reading order: the image from its first byte. The head is shown as `hd` shows it, since stage0's NULs and
-  // newlines are not the stream's: five rows, stage0's code and the text
-  // it runs on into, so the dump ends where the preface's heading does.
-  // The text itself starts where stage0's code ends.
+  // The book, in reading order: the image from its first byte, opening on
+  // the title page. Its head is shown as `hd` shows it, since stage0's NULs
+  // and newlines are not the stream's: whole rows, past stage0's code and
+  // on into the text it runs into. The text itself starts where stage0's
+  // code ends: its title and subtitle are set on the title page, and the
+  // book goes on from there.
   const DUMP_BYTES = 80;
   async function showBook() {
     const [size, image] = await Promise.all([
@@ -157,21 +84,24 @@
     // The dump reads the bytes themselves: a browser's latin1 is
     // windows-1252, which turns some of them into other characters. The
     // text keeps one character per byte either way.
-    const dump = Book.hexdump(image.subarray(0, DUMP_BYTES));
     const text = new TextDecoder("latin1").decode(image.subarray(code));
-    const lines = Book.splitLines(dump + text);
-    let highlight = () => {};
-    const view = Book.mount(book, lines, (line) => highlight(line));
-    highlight = showContents(Book.contents(lines), view);
-    highlight(-1);
+    const page = Book.titlePage(text);
+    titled.querySelector("#dump").textContent =
+        Book.hexdump(image.subarray(0, DUMP_BYTES));
+    showName(titled.querySelector(".title"), page.title);
+    showName(titled.querySelector(".subtitle"), page.subtitle);
+    const lines = Book.splitLines(page.rest);
+    Book.mount(book, lines);
   }
-  resizableBar();
 
   // The box's state: corner, full or min; the widgets move between them.
-  let state = "corner";
+  // It starts minimized, and Doom starts the first time it is opened.
+  let state = "min";
+  let cells = null;
   function setState(next) {
     state = next;
     box.className = next;
+    if (next !== "min") startDoom();
     document.getElementById("full").innerHTML =
         next === "full" ? "&#x2199;" : "&#x26F6;";
   }
@@ -189,11 +119,19 @@
     return;
   }
 
-  const keys = new SharedArrayBuffer(TowerHost.keyRingBytes());
-  const cells = new Int32Array(keys);
-  const worker = new Worker("worker.js");
+  function startDoom() {
+    if (cells || typeof SharedArrayBuffer === "undefined") return;
+    const keys = new SharedArrayBuffer(TowerHost.keyRingBytes());
+    cells = new Int32Array(keys);
+    const worker = new Worker("worker.js");
+    worker.onmessage = onMessage;
+    // The default resumes from the state the native driver saved when the
+    // tower published /bin/doom; ?boot=scratch runs the whole boot instead.
+    const resume = new URLSearchParams(location.search).get("boot") !== "scratch";
+    worker.postMessage({keys, base, resume});
+  }
 
-  worker.onmessage = (event) => {
+  function onMessage(event) {
     const message = event.data;
     if (message.kind === "frame") {
       if (canvas.width !== message.width || canvas.height !== message.height) {
@@ -207,12 +145,12 @@
     } else if (message.kind === "exit") {
       note.textContent = "tower exited with status " + message.status;
     }
-  };
+  }
 
   // Keys go to Doom, and never to the page, unless the box is minimized.
   function onKey(pressed) {
     return (event) => {
-      if (state === "min" || event.repeat) return;
+      if (state === "min" || !cells || event.repeat) return;
       const doomkey = doomKeyOf(event);
       if (doomkey === 0) return;
       event.preventDefault();
@@ -221,9 +159,4 @@
   }
   window.addEventListener("keydown", onKey(true));
   window.addEventListener("keyup", onKey(false));
-
-  // The default resumes from the state the native driver saved when the
-  // tower published /bin/doom; ?boot=scratch runs the whole boot instead.
-  const resume = new URLSearchParams(location.search).get("boot") !== "scratch";
-  worker.postMessage({keys, base, resume});
 })();

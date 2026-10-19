@@ -1,20 +1,15 @@
-// book.js -- the book: the machine's input shown verbatim, virtualized,
-// with its table of contents. The text is split into lines once, a NUL
-// byte becoming a row of its own (the seam between two sections); each
-// line wraps into the rows its length needs at the current column
-// count, and only the lines around the scroll position are in the DOM,
-// over a spacer of the full height. The contents are the stream's
-// sections and the archive's files, the latter also as a tree of
-// directories in the book's own order. Everything but mount is pure
-// over the line array, so node can exercise it.
+// book.js -- the book: the machine's input shown verbatim, virtualized.
+// The text is split into lines once, a NUL byte becoming a row of its own
+// (the seam between two sections); each line wraps into the rows its
+// length needs at the current column count, and only the lines around
+// the scroll position are in the DOM, over a spacer of the full height.
+// Everything but mount is pure, so node can exercise it.
 
 "use strict";
 
 const Book = (() => {
   const OVERSCAN = 100;
   const NUL = "\0";
-  const MARKER = /^\\ FILE: (.+)$/;
-  const HEADER = /^(\/\S*) (\d+)$/;
 
   // A tab moves to the next multiple of eight, as the page renders it.
   function expandTabs(line) {
@@ -44,6 +39,22 @@ const Book = (() => {
       rows.push(at.toString(16).padStart(8, "0") + "  " + hex + " |" + text + "|");
     }
     return rows.join("\n");
+  }
+
+  // The title page of a text: its first non-empty line is the title, the
+  // second the subtitle, and the rest is everything after the subtitle's
+  // line.
+  function titlePage(text) {
+    const found = [];
+    let at = 0;
+    while (found.length < 2 && at < text.length) {
+      let end = text.indexOf("\n", at);
+      if (end < 0) end = text.length;
+      const line = text.slice(at, end);
+      if (line.trim() !== "") found.push(line);
+      at = end + 1;
+    }
+    return {title: found[0] || "", subtitle: found[1] || "", rest: text.slice(at)};
   }
 
   // The lines of the text, every NUL byte lifted out as a line of its own.
@@ -89,13 +100,6 @@ const Book = (() => {
     return Math.min(Math.max(0, lastAtMost(rows, row)), rows.length - 2);
   }
 
-  // The line at the top of the viewport: the row the larger part of
-  // which is there, so a whole-pixel scroll position that falls a
-  // fraction short of a row's boundary still names that row.
-  function topLine(rows, scrollTop, rowHeight) {
-    return lineAtRow(rows, Math.round(scrollTop / rowHeight));
-  }
-
   // The lines to render for a scroll position: [first, last) and the
   // pixel offset of the first within the book.
   function windowOf(rows, scrollTop, viewHeight, rowHeight) {
@@ -106,61 +110,6 @@ const Book = (() => {
     const first = lineAtRow(rows, firstRow);
     const last = Math.min(count, lineAtRow(rows, lastRow) + 1);
     return {first, last, top: rows[first] * rowHeight};
-  }
-
-  // The entries of the book, {name, line} each in order: sections are the
-  // NUL-delimited ones, named by the catz marker on their first line or
-  // numbered; files are the archive's, by tower path from its headers, a
-  // section of headers being the archive.
-  function contents(lines) {
-    const sections = [], files = [];
-    let number = 0;
-    function section(from, to) {
-      if (from >= to) return;
-      number++;
-      if (HEADER.test(lines[from])) return archive(from, to);
-      const marker = MARKER.exec(lines[from]);
-      sections.push({name: marker ? marker[1] : "section " + number, line: from});
-    }
-    function archive(from, to) {
-      for (let i = from; i < to;) {
-        const header = HEADER.exec(lines[i]);
-        if (!header) return;
-        files.push({name: header[1], line: i});
-        i += Number(header[2]) + 2;
-      }
-    }
-    let start = 0;
-    for (let i = 0; i < lines.length; i++) {
-      if (lines[i] === NUL) { section(start, i); start = i + 1; }
-    }
-    section(start, lines.length);
-    return {sections, files};
-  }
-
-  // The files as a tree in their own order: a directory node {name, nodes}
-  // stays open while the following paths share its prefix and is opened
-  // anew when a later path returns to it; a file node is its entry with
-  // the path's last segment as name.
-  function tree(files) {
-    const root = {name: "", nodes: []};
-    let open = [];
-    for (const file of files) {
-      const segments = file.name.split("/").filter((s) => s !== "");
-      const dirs = segments.slice(0, -1);
-      let shared = 0;
-      while (shared < open.length && shared < dirs.length &&
-             open[shared].name === dirs[shared]) shared++;
-      open = open.slice(0, shared);
-      for (const dir of dirs.slice(shared)) {
-        const node = {name: dir, nodes: []};
-        (open.length ? open[open.length - 1] : root).nodes.push(node);
-        open.push(node);
-      }
-      (open.length ? open[open.length - 1] : root).nodes.push(
-          {name: segments[segments.length - 1], path: file.name, line: file.line});
-    }
-    return root.nodes;
   }
 
   // The size of one character cell of the element's font.
@@ -175,9 +124,8 @@ const Book = (() => {
   }
 
   // Shows the lines in the element and keeps the window in step with the
-  // page's scroll position and width; onTop hears the line at the top of
-  // the viewport (-1 above the book). Returns {scrollToLine}.
-  function mount(element, lines, onTop) {
+  // page's scroll position and width.
+  function mount(element, lines) {
     const spacer = document.createElement("div");
     const window_ = document.createElement("pre");
     spacer.className = "spacer";
@@ -219,17 +167,11 @@ const Book = (() => {
 
     function render() {
       const scrollTop = -element.getBoundingClientRect().top;
-      onTop(scrollTop < 0 ? -1 : topLine(rows, scrollTop, cell.height));
       const next = windowOf(rows, scrollTop, window.innerHeight, cell.height);
       if (next.first === shown.first && next.last === shown.last) return;
       shown = next;
       window_.style.top = next.top + "px";
       fill(next.first, next.last);
-    }
-
-    function scrollToLine(line) {
-      const top = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo(0, top + rows[line] * cell.height);
     }
 
     let pending = false;
@@ -241,11 +183,10 @@ const Book = (() => {
     window.addEventListener("scroll", onScroll, {passive: true});
     new ResizeObserver(layout).observe(element);
     layout();
-    return {scrollToLine};
   }
 
-  return {NUL, OVERSCAN, hexdump, expandTabs, splitLines, rowOffsets, lastAtMost,
-          lineAtRow, topLine, windowOf, contents, tree, mount};
+  return {NUL, OVERSCAN, hexdump, titlePage, expandTabs, splitLines, rowOffsets, lastAtMost,
+          lineAtRow, windowOf, mount};
 })();
 
 if (typeof module !== "undefined") module.exports = Book;

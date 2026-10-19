@@ -1,104 +1,49 @@
 /* book.css -- the page's look: the book as the page, and the Doom box fixed in the lower right corner in its three
    states (corner, full, min). */
 
-:root {
-  --bar: 260px;
-}
-
 body {
   margin: 0;
-  padding-left: var(--bar);
   background: #111;
   color: #ccc;
   font: 13px/1.4 monospace;
 }
 
-body.dragging {
-  user-select: none;
-}
-
-/* The contents bar scrolls on its own, as wide as --bar, the handle on
-   its right edge dragging that; a long name is trimmed from the left,
-   the rtl outer box putting the ellipsis there while the inner span
-   keeps the name's own order. */
-#contents {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: var(--bar);
+/* The title page, the one place off the book's grid: a viewport tall,
+   centered on the dump, a specimen of its own, and right under it the
+   title and subtitle, large, their comment markers dimmed. */
+#title {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   box-sizing: border-box;
-  padding: 8px 0;
-  overflow-y: auto;
-  background: #181818;
-  border-right: 1px solid #333;
+  padding: 24px;
+  white-space: pre;
 }
 
-#handle {
-  position: fixed;
-  left: calc(var(--bar) - 3px);
-  top: 0;
-  bottom: 0;
-  width: 6px;
-  cursor: col-resize;
-  z-index: 2;
+#dump {
+  margin: 0 0 32px;
+  padding: 12px 16px;
+  font: 11px/1.4 monospace;
+  color: #8a8;
+  background: #161d16;
+  border: 1px solid #2a3a2a;
 }
 
-#handle:hover {
-  background: #444;
-}
-
-#contents h2 {
-  margin: 8px 10px 2px;
-  font: inherit;
+#title .title {
+  font-size: 64px;
   font-weight: bold;
-  color: #777;
-}
-
-#contents a, #contents .name {
-  display: block;
-  padding: 1px 10px;
-  color: #aaa;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-#contents a {
-  text-decoration: none;
-  direction: rtl;
-  text-align: left;
-}
-
-#contents a span {
-  direction: ltr;
-  unicode-bidi: bidi-override;
-}
-
-#contents .name {
-  cursor: pointer;
-}
-
-#contents .name::before {
-  content: "\25BE ";
-  color: #666;
-}
-
-#contents .folded > .name::before {
-  content: "\25B8 ";
-}
-
-#contents .folded > .kids {
-  display: none;
-}
-
-#contents a:hover, #contents .name:hover {
   color: #eee;
 }
 
-#contents .current {
-  color: #dfd;
-  background: #2a3a2a;
+#title .subtitle {
+  font-size: 22px;
+  color: #bbb;
+}
+
+#title .marker {
+  color: #555;
 }
 
 #book {
